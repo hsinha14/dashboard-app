@@ -20,6 +20,16 @@
         "label": "Home Page"
     },
     {
+        "id": "61f45e89.e9959",
+        "type": "tab",
+        "label": "Flow 2"
+    },
+    {
+        "id": "73c2b0f6.41dab",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
         "id": "f359e7a3.637498",
         "type": "mongodb",
         "z": "ec253f80.0c828",
@@ -27,6 +37,24 @@
         "port": "27017",
         "db": "node-red",
         "name": "Mongo"
+    },
+    {
+        "id": "2903ae4c.f1dc52",
+        "type": "mongodb",
+        "z": "73c2b0f6.41dab",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "wsr-data",
+        "name": "wsrData"
+    },
+    {
+        "id": "c60cb185.3a934",
+        "type": "mongodb",
+        "z": "61f45e89.e9959",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "wsrData",
+        "name": ""
     },
     {
         "id": "fc8ab9ea.abc4b8",
@@ -116,22 +144,6 @@
         "wires": [
             [
                 "33f2dced.9b3cc4"
-            ]
-        ]
-    },
-    {
-        "id": "d992a9ee.552d88",
-        "type": "mongodb in",
-        "z": "ec253f80.0c828",
-        "mongodb": "f359e7a3.637498",
-        "name": "Get Data",
-        "collection": "alert",
-        "operation": "find",
-        "x": 302,
-        "y": 191,
-        "wires": [
-            [
-                "cf795a56.57ff58"
             ]
         ]
     },
@@ -815,5 +827,519 @@
         "x": 575.5,
         "y": 126,
         "wires": []
+    },
+    {
+        "id": "90528b40.71bf48",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 81,
+        "y": 137,
+        "wires": [
+            [
+                "4c8c7e4a.825a5"
+            ]
+        ]
+    },
+    {
+        "id": "af49edbc.2d76b",
+        "type": "csv",
+        "z": "61f45e89.e9959",
+        "name": "CSV content",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Priority*,Impact*,Incident ID*+,Summary*,Status*,Status Reason,Vendor Ticket Number,Assignee+,Reported Date+,Responded Date+,Last Resolved Date,Closed Date,First Name+,Last Name+",
+        "x": 461,
+        "y": 157,
+        "wires": [
+            [
+                "bcb873c1.4728d"
+            ]
+        ]
+    },
+    {
+        "id": "bcb873c1.4728d",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 661,
+        "y": 157,
+        "wires": [
+            [
+                "adc8ebc6.0bd908"
+            ]
+        ]
+    },
+    {
+        "id": "adc8ebc6.0bd908",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "wsrData",
+        "collection": "all-incidents",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 783,
+        "y": 217,
+        "wires": []
+    },
+    {
+        "id": "d817dbb1.da6128",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/getjson",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 78,
+        "y": 362,
+        "wires": [
+            [
+                "9f22e7a0.dfeec8"
+            ]
+        ]
+    },
+    {
+        "id": "2836f605.f49c7a",
+        "type": "mongodb in",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "all-incidents",
+        "operation": "find",
+        "x": 366,
+        "y": 390,
+        "wires": [
+            [
+                "25217875.7f4aa8"
+            ]
+        ]
+    },
+    {
+        "id": "25217875.7f4aa8",
+        "type": "json",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 585,
+        "y": 353,
+        "wires": [
+            [
+                "9c725998.321448"
+            ]
+        ]
+    },
+    {
+        "id": "f15f569b.599a58",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 840,
+        "y": 428,
+        "wires": []
+    },
+    {
+        "id": "9c725998.321448",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 719,
+        "y": 412,
+        "wires": [
+            [
+                "f15f569b.599a58"
+            ]
+        ]
+    },
+    {
+        "id": "9f22e7a0.dfeec8",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.skip=0;\nmsg.limit=0;\nmsg.payload={};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 144,
+        "y": 447,
+        "wires": [
+            [
+                "2836f605.f49c7a"
+            ]
+        ]
+    },
+    {
+        "id": "4c8c7e4a.825a5",
+        "type": "file in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "filename": "D:/csv-files/all incidents.csv",
+        "format": "utf8",
+        "x": 234,
+        "y": 197,
+        "wires": [
+            [
+                "af49edbc.2d76b"
+            ]
+        ]
+    },
+    {
+        "id": "a03109c0.920e28",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 96,
+        "y": 261,
+        "wires": [
+            [
+                "767d6075.fb70e"
+            ]
+        ]
+    },
+    {
+        "id": "5d4950a.34ac2b",
+        "type": "csv",
+        "z": "61f45e89.e9959",
+        "name": "CSV content",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Problem ID*+,Priority*,Impact*,Status*,Summary*,Notes,Assignee+,Target Date,Known Error Created,Submit Date,Submitter*,Vendor Ticket Number,Workaround,Resolution,Last Modified Date,Closed_Date",
+        "x": 430,
+        "y": 253,
+        "wires": [
+            [
+                "a5220d76.ca133"
+            ]
+        ]
+    },
+    {
+        "id": "a5220d76.ca133",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 576,
+        "y": 287,
+        "wires": [
+            [
+                "5a693377.c0db9c"
+            ]
+        ]
+    },
+    {
+        "id": "5a693377.c0db9c",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "problemRecords",
+        "collection": "problem-record",
+        "payonly": true,
+        "upsert": true,
+        "multi": true,
+        "operation": "store",
+        "x": 750,
+        "y": 278,
+        "wires": []
+    },
+    {
+        "id": "767d6075.fb70e",
+        "type": "file in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "filename": "D:/csv-files/all problems records.csv",
+        "format": "utf8",
+        "x": 248,
+        "y": 313,
+        "wires": [
+            [
+                "5d4950a.34ac2b"
+            ]
+        ]
+    },
+    {
+        "id": "e37dec89.e29c",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/getpr",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 65,
+        "y": 492,
+        "wires": [
+            [
+                "7886356b.5cdaec"
+            ]
+        ]
+    },
+    {
+        "id": "396c1d62.fa9472",
+        "type": "mongodb in",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "problem-record",
+        "operation": "find",
+        "x": 386,
+        "y": 510,
+        "wires": [
+            [
+                "f99c3d41.cd8f5"
+            ]
+        ]
+    },
+    {
+        "id": "f99c3d41.cd8f5",
+        "type": "json",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 531,
+        "y": 584,
+        "wires": [
+            [
+                "3b4abb3b.241914"
+            ]
+        ]
+    },
+    {
+        "id": "9af069b7.cb3328",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 837,
+        "y": 558,
+        "wires": []
+    },
+    {
+        "id": "3b4abb3b.241914",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 666,
+        "y": 530,
+        "wires": [
+            [
+                "9af069b7.cb3328"
+            ]
+        ]
+    },
+    {
+        "id": "7886356b.5cdaec",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.skip=0;\nmsg.limit=0;\nmsg.payload={};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 141,
+        "y": 577,
+        "wires": [
+            [
+                "396c1d62.fa9472"
+            ]
+        ]
+    },
+    {
+        "id": "db7a0948.8ad088",
+        "type": "template",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>M&S support HUB</title>\n</head>\n\n<body>\n   <h1>Hello M&S</h1>\n   {{incidentData}}\n\n   <a href=\"assets/wsr-automation/views/template.html\">click here</a>\n   <a href=\"assets/wsr-automation/views/trends.html\">Trends</a>\n    \n</body>\n</html>\n",
+        "x": 430,
+        "y": 388,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6271414c.05e82",
+        "type": "http in",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "url": "/wsr",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 65,
+        "y": 147,
+        "wires": [
+            [
+                "6bd2d57e.2b6dcc",
+                "d2c752de.33b6e"
+            ]
+        ]
+    },
+    {
+        "id": "31f9e20a.f1497e",
+        "type": "http response",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "x": 822,
+        "y": 194,
+        "wires": []
+    },
+    {
+        "id": "6bd2d57e.2b6dcc",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getjson",
+        "tls": "",
+        "x": 192,
+        "y": 51,
+        "wires": [
+            [
+                "90a005dd.2dc158"
+            ]
+        ]
+    },
+    {
+        "id": "90a005dd.2dc158",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier = 'all-incidents';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 342,
+        "y": 111,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "d2c752de.33b6e",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getpr",
+        "tls": "",
+        "x": 200,
+        "y": 245,
+        "wires": [
+            [
+                "79cffcd0.139944"
+            ]
+        ]
+    },
+    {
+        "id": "79cffcd0.139944",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier=\"problem-record\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 346,
+        "y": 193,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "ce75b255.31529",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "if (!context.data){\n   context.data = {\n       csvdata: {}\n   };\n} \nif(msg.identifier === \"all-incidents\"){\n    context.data.csvdata.allIncident = msg.payload;\n} else {\n    context.data.csvdata.probRecords = msg.payload;\n}\nif(context.data.csvdata.allIncident && context.data.csvdata.probRecords){\n     msg.payload = context.data;\n     context.data = null;\n     msg.incidentData=JSON.parse(msg.payload.csvdata.allIncident);\n     msg.probRecords=JSON.parse(msg.payload.csvdata.probRecords);\n     console.log(typeof(msg.incidentData));\n          console.log(typeof(msg.probRecords));\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 499,
+        "y": 115,
+        "wires": [
+            [
+                "8f656c28.a4d46"
+            ]
+        ]
+    },
+    {
+        "id": "d992a9ee.552d88",
+        "type": "mongodb in",
+        "z": "ec253f80.0c828",
+        "mongodb": "f359e7a3.637498",
+        "name": "Get Data",
+        "collection": "alert",
+        "operation": "find",
+        "x": 302,
+        "y": 191,
+        "wires": [
+            [
+                "cf795a56.57ff58"
+            ]
+        ]
+    },
+    {
+        "id": "8f656c28.a4d46",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "var tableDatas={};\nvar incidentDataJson=[\n    [\"Weekly Report (MM/DD/YYYY)\"],\n    [\"Overall\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\"],\n    [\"Incidents\"],\n    [\"Problem Records\"]\n];\nvar slaViewData= [\n\t[\"Sev1\",\"4hours\",,,0],\n\t[\"Sev2\",\"8hours\",,,0],\n\t[\"Sev3/4\",\"NA\",,\"NA\",\"NA\"]\n];\n\nfunction getfulldate(today) { //returns date in mm/dd/yyyy format\n\tvar currentDate=today.getDate(),\n\t\tcurrentMonth=today.getMonth()+1;\n\tvar x=(currentMonth<10)?('0'+currentMonth):currentMonth;\n\tvar y=(currentDate<10)?('0'+currentDate):currentDate;\n\treturn (x+'/'+y+'/'+today.getFullYear());\n}\nfunction getLastSunday(d) { //returns last sunday date takes input as mm/dd/yyyy\n  \tvar t = new Date(d);\n  \tt.setDate(t.getDate() - t.getDay());\n  \treturn t;\n}\nfunction getDateStamp(dateStamp) {\n\tvar monthName=[\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"June\",\"July\", \"Aug\", \"Sept\", \"Oct\", \"Nov\", \"Dec\"];\n\tvar newDate= new Date(dateStamp);\n\treturn newDate.getDate()+\"-\"+monthName[newDate.getMonth()]+\"-\"+newDate.getFullYear();\n}\n\nvar lastSundaydate=getLastSunday(getfulldate(new Date()));\ntableDatas[\"date\"]=getDateStamp(lastSundaydate);\nvar lastSunday=getfulldate(lastSundaydate);\nvar i=2;\nincidentDataJson[0][i-1]=lastSunday;\ndo{\n\tvar newlastSundaydate=new Date(lastSundaydate.setDate(lastSundaydate.getDate() - 7));\n\tvar newlastSunday=getfulldate(newlastSundaydate);\n\tincidentDataJson[0][i]=newlastSunday;\n\tlastSundaydate=newlastSundaydate;\n\tlastSunday=newlastSunday;\n\ti++;\n} while(i<7);\n\n\n/***incident Count ***/\nvar firstEl=true,criticalCount=0,highCount=0,lowCount=0;\n\nfor (var i=1;i<incidentDataJson[0].length;i++) {\n\tvar dateTo=incidentDataJson[0][i];\n    var to=new Date(dateTo);\n    var newto=new Date(dateTo);\n    var dateFrom=new Date(newto.setDate(newto.getDate() - 6));\n    var incidentCount=0;\n\tfor (var j=0;j<msg.incidentData.length;j++) {\n\t\tvar getDate=msg.incidentData[j][\"Reported Date+\"];\n\t\t//console.log(getDate);\n\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t    var check=new Date(daterange);\n\t\tif(check >= dateFrom && check <= to ) {\n        \tincidentCount++;\n        \tif(msg.incidentData[j][\"Priority*\"]===\"Critical\" && firstEl) {\n        \t\tcriticalCount++;\n        \t}\n        \tif(msg.incidentData[j][\"Priority*\"]===\"High\" && firstEl) {\n        \t\thighCount++;\n        \t}\n        \tif((msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Low\") && firstEl) {\n        \t\tlowCount++;\n        \t}\n\n\n    \t}\n\t}\n\tfirstEl=false;\n\tincidentDataJson[2][i]=incidentCount;\n}\n\n\n/***problem Count ***/\n\tfor (var i=1;i<incidentDataJson[0].length;i++) {\n\t\tvar dateTo=incidentDataJson[0][i];\n        var to=new Date(dateTo);\n        var newto=new Date(dateTo);\n        var dateFrom=new Date(newto.setDate(newto.getDate() - 6));\n        var problemCount=0;\n\t\tfor (var j=0;j<msg.probRecords.length;j++) {\n\t\t\tvar getDate=msg.probRecords[j][\"Submit Date\"];\n\t\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t\t    var check=new Date(daterange);\n\t\t\tif(check >= dateFrom && check <= to && msg.probRecords[j][\"Status*\"]===\"Draft\" ) {\n            \tproblemCount++;\n        \t}\n\t\t}\n\t\tincidentDataJson[3][i]=problemCount;\n\t}\n\nslaViewData[0][2]=criticalCount;\nslaViewData[0][3]=criticalCount;\nslaViewData[1][2]=highCount;\nslaViewData[1][3]=highCount;\nslaViewData[2][2]=lowCount;\ntableDatas[\"incidentData\"]=incidentDataJson;\ntableDatas[\"slaView\"]=slaViewData;\nconsole.log(\"typeIn\",typeof(incidentDataJson));\nconsole.log(\"typesla\",typeof(slaViewData));\n\nmsg.tableDatas= JSON.stringify(tableDatas);\nmsg.tableData=tableDatas;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586,
+        "y": 193,
+        "wires": [
+            [
+                "21b1217f.ab706e"
+            ]
+        ]
+    },
+    {
+        "id": "21b1217f.ab706e",
+        "type": "template",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>MNS-Reporting</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/wsr-automation/css/style.css\">\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js\"></script>\n    <script src=\"http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\"></script>\n    <script src=\"assets/wsr-automation/js/app.js\"></script>\n    <script src=\"assets/wsr-automation/js/executiveSummary/newcontroller.js\"></script>\n    <script src=\"assets/wsr-automation/js/common/createTable.directive.js\"></script>\n    <script src='http://js.nicedit.com/nicEdit-latest.js'></script>\n<script type=\"text/javascript\">\nvar tableDatas={{{tableDatas}}};\nvar dateDisplay=tableDatas.date;\nconsole.log(dateDisplay);\n  /*  Papa.parse(\"../mock-data/all incidents.csv\", {\n        download: true,\n        dynamicTyping: true,\n        complete: function(results) {\n            //console.log(results.data[1][8]);\n            //s.substring(0, s.indexOf(' '));\n            //var tempres=results.data[1];\n            //console.log(tempres[9]);\n            //console.log(results.data[2]);\n            var incidentDataJson=[\n            [\"Weekly Report\",,,,,,],\n            [\"Overall\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\"],\n            [\"Incidents\",,,,,,],\n            [\n            \"Problem Records\",\n            \"0\",\n            \"2\",\n            \"1\",\n            \"1\",\n            \"0\",\n            \"2\"\n        ]\n    ];\n            var incidentCount=0;\n            //console.log(results.data.length);\n            var dateSpan=[]\n            for (var i=1;i<results.data.length-1;i++) {\n                var getDate=results.data[i][8];\n                var daterange=getDate.substring(0, getDate.indexOf(' '));\n                var dateFrom = \"9/19/2016\";\n                var dateTo = \"9/25/2016\";\n\n                var from=new Date(dateFrom);\n                var to=new Date(dateTo);\n                var check=new Date(daterange);\n                if(check >= from && check <= to ) {\n                    incidentCount++;\n                }\n            }\n            console.log(\"incidentCount\",incidentCount);\n\n\n        }\n    });*/\n</script>\n</head>\n<body>\n    <main class=\"container\" ng-app=\"weeklyReports\" ng-controller=\"reportsCtrl\">\n        <script type=\"text/ng-template\" id=\"incidentDataTable.html\">\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"slaViewTable.html\">\n            <tr>\n                <td>Incident</td><td>SLA</td><td>Reported</td><td>Acheived</td><td>Breached</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"incidentSumTable.html\">\n            <tr>\n                <td ng-repeat=\"(key,value) in dataFromTable\" ng-bind=\"key\"></td>\n            </tr>\n            <tr>\n                <td ng-repeat=\"data in dataFromTable\" ng-bind=\"data\"></td>\n            </tr>\n        </script>\n         \n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/mns-logo.jpg\" alt=\"Marks and Spencer logo\" id=\"mnsLogo\">\n            <img src=\"assets/wsr-automation/images/sapient-nitro.png\" alt=\"SapientNitro logo\" id=\"sapientLogo\">\n        </div>\n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/print-icon.png\" alt=\"Print Logo\" id=\"printLogo\" ng-click=\"printOption()\">\n        </div>\n\n        <section class=\"clearfix\">\n            <table id=\"incidents\">\n                <caption>Incidents originating in Week ending {{tableData.date}}</caption>\n                <tbody id=\"incidentDataTable\" table-dir dataparam=tableDatas.incidentData></tbody>\n            </table>\n            <table id=\"slaView\">\n                <caption>SLA View for Week ending {{tableData.date}}</caption>\n                <tbody id=\"slaViewTable\" table-dir dataparam=\"tableDatas.slaView\"></tbody>\n            </table>\n            <table id=\"incidentSummary\">\n                <caption>Incident Summary till {{tableData.date}}</caption>\n                <tbody id=\"incidentSumTable\" table-dir dataparam=\"tableData.incidentSummary\"></tbody>\n            </table>\n        </section>\n\n        <section>\n            <h1>\n                M&S eCom Support Weekly Status Report - Week Ending  {{tableData.date}}\n            </h1>\n            <div id=\"keyUpdates\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key updates</h2>\n                </div>\n\n                <div id=\"myArea1\" class=\"edit-div\">\n                    <div>\n                        <h3>Progress Last Week RAYG : GREEN</h3>\n                        <ul>\n                            <li>Total <span>69</span> incidents were raised in last week. Pending triage incidents are currently <span>29</span>.</li>\n                            <li>1 Sev 2's were raised last week.\n                                <ul>\n                                    <li>Sev 2 | INC000021527174 | EMAIL-PROBE (Site Confidence Alert:Script Step[28065111]) - Site Confidence Alert Script Step - Site Confidence Journey was failing</li>\n                                </ul>\n                            </li>\n                        </ul>\n                        <h3>Problem Record</h3>\n                        <ul>\n                            <li><span>2</span> Open (0 Draft ,2 Pending, 0 Under Review)</li>\n                        </ul>\n                        <h3>Business Events</h3>\n                        <ul>\n                            <li>NA</li>\n                        </ul>\n                        <h3>Environments</h3>\n                        <ul>\n                            <li>PROD | B&C | THROTTLE | Moving Mobile/App to -6 and Basket change <span>21st Mar</span></li>\n                            <li>PROD | Throttling to 100% New Basket for CS and Stores <span>23rd Mar</span></li>\n                            <li>PROD | CM-182 | SPARKS - FE change for Sparks FAQs link <span>24th Mar</span></li>\n                            <li>PROD | CM-183 | Whitelisting Omniture rest API Url for Prod Servers <span>24th Mar</span></li>\n                            <li>PROD | Timezone change to BST <span>27th Mar</span></li>\n                            <li>SIT3 | R26 Deployment <span>21st Mar</span></li>\n                            <li>SIT3/B | Apply RHEL Patch <span>23rd Mar</span></li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n            <div id=\"nextWeekPlan\" class=\"sections\" >\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\"> Plan for next week</h2>\n                </div>\n\n                <div id=\"nextWeek\" class=\"edit-div\" >\n                    <h3>Business Events</h3>\n                    <ul>\n                        <li>NA</li>\n                    </ul>\n                    <h3>Environments</h3>\n                    <ul>\n                        <li>PROD | RHEL Patching DR <span>28th Mar</span></li>\n                        <li>PROD | Bing SIte Authorisation Update in AKAMAI <span>29th Mar</span></li>\n                        <li>PROD | RHEL Patching BURST <span>29th Mar</span></li>\n                        <li>PROD | R26 Deployment <span>30th Mar</span></li>\n                        <li>DR | QA3 | R26 Deployment <span>31st Mar</span></li>\n                    </ul>\n                </div>\n            </div>\n            <div id=\"risksIssues\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key risks/issues</h2>\n                </div>\n\n                <div id=\"risk\" class=\"edit-div\">\n                    <ul>\n                        <li>Single Prod/ non-Prod account for Bing request. There is threshhold of 50 requested in 24 hrs</li>\n                        <li>Stageprop session killed twice</li>\n                    </ul>\n                </div>\n            </div>\n            <div id=\"accomplishments\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Accomplishments</h2>\n                </div>\n\n                <div id=\"accomp\" class=\"edit-div\">\n                    <ul>\n                        <li>Timezone changed from GMT to BST has been successfully completed on 27th March.</li>\n                    </ul>\n                </div>\n            </div>\n            <div id=\"keyDependencies\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key dependencies</h2>\n                </div>\n                <div id=\"keyDepend\" class=\"edit-div\">\n                    <ul>\n                    </ul>\n                </div>\n            </div>\n        </section>\n    </main>\n</body>\n</html>\n\n\n\n",
+        "x": 701,
+        "y": 243,
+        "wires": [
+            [
+                "31f9e20a.f1497e"
+            ]
+        ]
     }
 ]

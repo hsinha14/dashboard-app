@@ -6,9 +6,12 @@
     "start": "node_modules/.bin/node-red --port 80 --userDir flow/ flows.json"
   },
   "dependencies": {
+    "gcalendar": "*",
     "node-red": "^0.14.3",
     "node-red-contrib-mail-parse": "~0.1.5",
+    "node-red-gcalendar": "file:node_modules\\node-red\\nodes\\goocalendar",
     "node-red-node-email": "^0.1.9",
-    "node-red-node-mongodb": "~0.0.5"
+    "node-red-node-mongodb": "~0.0.5",
+    "simple-oauth2": "^1.0.1"
   }
 }

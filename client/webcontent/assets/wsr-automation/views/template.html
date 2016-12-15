@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MNS-Reporting</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/executiveSummary/executiveSummary.controller.js"></script>
+    <script src="../js/common/createTable.directive.js"></script>
+    <script src='http://js.nicedit.com/nicEdit-latest.js'></script>
+</head>
+<body>
+    <main class="container" ng-app="weeklyReports" ng-controller="reportsCtrl">
+        <script type="text/ng-template" id="incidentDataTable.html">
+            <tr ng-repeat="data in dataFromTable">
+                <td ng-repeat="values in data track by $index" ng-class="values" ng-bind="values"></td>
+            </tr>
+        </script>
+        <script type="text/ng-template" id="slaViewTable.html">
+            <tr>
+                <td>Incident</td><td>SLA</td><td>Reported</td><td>Acheived</td><td>Breached</td>
+            </tr>
+            <tr ng-repeat="data in dataFromTable">
+                <td ng-repeat="values in data track by $index" ng-bind="values"></td>
+            </tr>
+        </script>
+        <script type="text/ng-template" id="incidentSumTable.html">
+            <tr>
+                <td ng-repeat="(key,value) in dataFromTable" ng-bind="key"></td>
+            </tr>
+            <tr>
+                <td ng-repeat="data in dataFromTable" ng-bind="data"></td>
+            </tr>
+        </script>
+         
+        <div class="clearfix">
+            <img src="../images/mns-logo.jpg" alt="Marks and Spencer logo" id="mnsLogo">
+            <img src="../images/sapient-nitro.png" alt="SapientNitro logo" id="sapientLogo">
+        </div>
+        <div class="clearfix">
+            <img src="../images/print-icon.png" alt="Print Logo" id="printLogo" ng-click="printOption()">
+        </div>
+
+        <section class="clearfix">
+            <table id="incidents">
+                <caption>Incidents originating in Week ending  {{tableDatas.date}}</caption>
+                <tbody id="incidentDataTable" table-dir dataparam="tableDatas.incidentData" incident-data-json="incidentDataJson"></tbody>
+            </table>
+            <table id="slaView">
+                <caption>SLA View for Week ending {{tableDatas.date}}</caption>
+                <tbody id="slaViewTable" table-dir dataparam="tableDatas.slaView"></tbody>
+            </table>
+            <table id="incidentSummary">
+                <caption>Incident Summary till {{tableDatas.date}}</caption>
+                <tbody id="incidentSumTable" table-dir dataparam="tableData.incidentSummary"></tbody>
+            </table>
+        </section>
+
+        <section>
+            <h1>
+                M&S eCom Support Weekly Status Report - Week Ending  {{tableDatas.date}}
+            </h1>
+            <div id="keyUpdates" class="sections">
+                <div class="header-div">
+                    <span class="edit-button"></span>
+                    <h2 class="headlines">Key updates</h2>
+                </div>
+
+                <div id="myArea1" class="edit-div">
+                    <div>
+                        <h3>Progress Last Week RAYG : GREEN</h3>
+                        <ul>
+                            <li>Total <span>69</span> incidents were raised in last week. Pending triage incidents are currently <span>29</span>.</li>
+                            <li>1 Sev 2's were raised last week.
+                                <ul>
+                                    <li>Sev 2 | INC000021527174 | EMAIL-PROBE (Site Confidence Alert:Script Step[28065111]) - Site Confidence Alert Script Step - Site Confidence Journey was failing</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h3>Problem Record</h3>
+                        <ul>
+                            <li><span>2</span> Open (0 Draft ,2 Pending, 0 Under Review)</li>
+                        </ul>
+                        <h3>Business Events</h3>
+                        <ul>
+                            <li>NA</li>
+                        </ul>
+                        <h3>Environments</h3>
+                        <ul>
+                            <li>PROD | B&C | THROTTLE | Moving Mobile/App to -6 and Basket change <span>21st Mar</span></li>
+                            <li>PROD | Throttling to 100% New Basket for CS and Stores <span>23rd Mar</span></li>
+                            <li>PROD | CM-182 | SPARKS - FE change for Sparks FAQs link <span>24th Mar</span></li>
+                            <li>PROD | CM-183 | Whitelisting Omniture rest API Url for Prod Servers <span>24th Mar</span></li>
+                            <li>PROD | Timezone change to BST <span>27th Mar</span></li>
+                            <li>SIT3 | R26 Deployment <span>21st Mar</span></li>
+                            <li>SIT3/B | Apply RHEL Patch <span>23rd Mar</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="nextWeekPlan" class="sections" >
+                <div class="header-div">
+                    <span class="edit-button"></span>
+                    <h2 class="headlines"> Plan for next week</h2>
+                </div>
+
+                <div id="nextWeek" class="edit-div" >
+                    <h3>Business Events</h3>
+                    <ul>
+                        <li>NA</li>
+                    </ul>
+                    <h3>Environments</h3>
+                    <ul>
+                        <li>PROD | RHEL Patching DR <span>28th Mar</span></li>
+                        <li>PROD | Bing SIte Authorisation Update in AKAMAI <span>29th Mar</span></li>
+                        <li>PROD | RHEL Patching BURST <span>29th Mar</span></li>
+                        <li>PROD | R26 Deployment <span>30th Mar</span></li>
+                        <li>DR | QA3 | R26 Deployment <span>31st Mar</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="risksIssues" class="sections">
+                <div class="header-div">
+                    <span class="edit-button"></span>
+                    <h2 class="headlines">Key risks/issues</h2>
+                </div>
+
+                <div id="risk" class="edit-div">
+                    <ul>
+                        <li>Single Prod/ non-Prod account for Bing request. There is threshhold of 50 requested in 24 hrs</li>
+                        <li>Stageprop session killed twice</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="accomplishments" class="sections">
+                <div class="header-div">
+                    <span class="edit-button"></span>
+                    <h2 class="headlines">Accomplishments</h2>
+                </div>
+
+                <div id="accomp" class="edit-div">
+                    <ul>
+                        <li>Timezone changed from GMT to BST has been successfully completed on 27th March.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="keyDependencies" class="sections">
+                <div class="header-div">
+                    <span class="edit-button"></span>
+                    <h2 class="headlines">Key dependencies</h2>
+                </div>
+                <div id="keyDepend" class="edit-div">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+
+

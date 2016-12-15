@@ -1,0 +1,690 @@
+{
+  "chartObject": {
+    "type": "LineChart",
+    "displayed": false,
+    "data": {
+      "cols": [
+        {
+          "id": "A",
+          "label": "NEW A",
+          "type": "string"
+        },
+        {
+          "id": "B",
+          "label": "New",
+          "type": "number"
+        },
+        {
+          "id": "C",
+          "label": "Resolved",
+          "type": "number"
+        },
+        {
+          "id": "D",
+          "label": "Open",
+          "type": "number"
+        },
+        {
+          "id": "E",
+          "label": "Total Open",
+          "type": "number"
+        }
+      ],
+      "rows": [
+        {
+          "c": [
+            {
+              "v": 0,
+              "f": "21-Feb-2016"
+            },
+            {
+              "v": 69
+            },
+            {
+              "v": 76
+            },
+            {
+              "v": 15
+            },
+            {
+              "v": 19
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 1,
+              "f": "28-Feb-2016"
+            },
+            {
+              "v": 82
+            },
+            {
+              "v": 68
+            },
+            {
+              "v": 16
+            },
+            {
+              "v": 18
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 2,
+              "f": "6-Mar-2016"
+            },
+            {
+              "v": 87
+            },
+            {
+              "v": 89
+            },
+            {
+              "v": 19
+            },
+            {
+              "v": 21
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "13-Mar-2016"
+            },
+            {
+              "v": 53
+            },
+            {
+              "v": 79
+            },
+            {
+              "v": 14
+            },
+            {
+              "v": 16
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 4,
+              "f": "20-Mar-2016"
+            },
+            {
+              "v": 68
+            },
+            {
+              "v": 50
+            },
+            {
+              "v": 26
+            },
+            {
+              "v": 28
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 5,
+              "f": "27-Mar-2016"
+            },
+            {
+              "v": 69
+            },
+            {
+              "v": 71
+            },
+            {
+              "v": 29
+            },
+            {
+              "v": 30
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "title": "Sales per month",
+      "isStacked": "true",
+      "fill": 20,
+      "legend": {
+        "position": "bottom"
+      },
+      "colors": [
+        "#4A7EBB",
+        "#ff0000",
+        "#98B954",
+        "#7D60A0"
+      ],
+      "displayExactValues": true,
+      "vAxis": {
+        "title": "",
+        "gridlines": {
+          "count": 10
+        }
+      },
+      "hAxis": {
+        "title": ""
+      }
+    },
+    "formatters": {}
+  },
+  "chartObject1": {
+    "type": "BarChart",
+    "displayed": false,
+    "data": {
+      "cols": [
+        {
+          "id": "A",
+          "label": "NEW A",
+          "type": "string"
+        },
+        {
+          "id": "B",
+          "label": "Incident Count",
+          "type": "number"
+        }
+      ],
+      "rows": [
+        {
+          "c": [
+            {
+              "v": 0,
+              "f": "0-7 Days"
+            },
+            {
+              "v": 15
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 1,
+              "f": "8-14 Days"
+            },
+            {
+              "v": 13
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 2,
+              "f": "15-30 Days"
+            },
+            {
+              "v": 2
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "30+ Days"
+            },
+            {
+              "v": 0
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "title": "",
+      "isStacked": "false",
+      "fill": 20,
+      "displayExactValues": true,
+      "colors": [
+        "#92D050"
+      ],
+      "vAxis": {
+        "title": "",
+        "gridlines": {
+          "count": 10
+        }
+      },
+      "orientation": "horizontal",
+      "hAxis": {
+        "title": ""
+      }
+    },
+    "formatters": {}
+  },
+  "chartObject2": {
+    "type": "ComboChart",
+    "displayed": false,
+    "data": {
+      "cols": [
+        {
+          "id": "A",
+          "label": "NEW A",
+          "type": "string"
+        },
+        {
+          "id": "B",
+          "label": "Current Week",
+          "type": "number"
+        },
+        {
+          "id": "B",
+          "label": "Week ending 20th Mar",
+          "type": "number"
+        }
+      ],
+      "rows": [
+        {
+          "c": [
+            {
+              "v": 0,
+              "f": "Connectivity Issue 3rd Party - Site Confidence"
+            },
+            {
+              "v": 12
+            },
+            {
+              "v": 7
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 1,
+              "f": "Application Error"
+            },
+            {
+              "v": 5
+            },
+            {
+              "v": 6
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 2,
+              "f": "Service Request IT"
+            },
+            {
+              "v": 10
+            },
+            {
+              "v": 5
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Service Request Business"
+            },
+            {
+              "v": 3
+            },
+            {
+              "v": 5
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Misdirected/ Invalid call"
+            },
+            {
+              "v": 12
+            },
+            {
+              "v": 7
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Training Deficiency"
+            },
+            {
+              "v": 4
+            },
+            {
+              "v": 7
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Duplicate call"
+            },
+            {
+              "v": 11
+            },
+            {
+              "v": 4
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Known Error"
+            },
+            {
+              "v": 12
+            },
+            {
+              "v": 9
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Security Breach"
+            },
+            {
+              "v": ""
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Connectivity Issue - 3rd Party"
+            },
+            {
+              "v": ""
+            },
+            {
+              "v": ""
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "title": "",
+      "isStacked": "false",
+      "fill": 20,
+      "displayExactValues": true,
+      "seriesType": "bars",
+      "width": 600,
+      "series": {
+        "1": {
+          "type": "line"
+        }
+      },
+      "colors": [
+        "#92D050",
+        "#D17E7C"
+      ],
+      "vAxis": {
+        "title": "",
+        "gridlines": {
+          "count": 10
+        }
+      },
+      "orientation": "horizontal",
+      "hAxis": {
+        "title": ""
+      }
+    },
+    "formatters": {}
+  },
+  "chartObject3": {
+    "type": "BarChart",
+    "displayed": false,
+    "data": {
+      "cols": [
+        {
+          "id": "A",
+          "label": "weeklyAgeing",
+          "type": "string"
+        },
+        {
+          "id": "B",
+          "label": "Problem Records",
+          "type": "number"
+        }
+      ],
+      "rows": [
+        {
+          "c": [
+            {
+              "v": 0,
+              "f": "0-7 Days"
+            },
+            {
+              "v": 0
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 1,
+              "f": "8-14 Days"
+            },
+            {
+              "v": 0
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 2,
+              "f": "15-30 Days"
+            },
+            {
+              "v": 1
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "30+ Days"
+            },
+            {
+              "v": 1
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "title": "Problem Record Ageing",
+      "isStacked": "false",
+      "fill": 20,
+      "displayExactValues": true,
+      "width": 600,
+      "colors": [
+        "#92D050"
+      ],
+      "vAxis": {
+        "title": "",
+        "gridlines": {
+          "count": 4
+        }
+      },
+      "orientation": "horizontal",
+      "hAxis": {
+        "title": ""
+      }
+    },
+    "formatters": {}
+  },
+  "chartObject4": {
+    "type": "BarChart",
+    "displayed": false,
+    "data": {
+      "cols": [
+        {
+          "id": "A",
+          "label": "NEW A",
+          "type": "string"
+        },
+        {
+          "id": "B",
+          "label": "Not Aligned",
+          "type": "number"
+        },
+        {
+          "id": "B",
+          "label": "Release 26",
+          "type": "number"
+        }
+      ],
+      "rows": [
+        {
+          "c": [
+            {
+              "v": 0,
+              "f": "In Development"
+            },
+            {
+              "v": 3
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 1,
+              "f": "In SIT"
+            },
+            {
+              "v": 1
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 2,
+              "f": "Not Started"
+            },
+            {
+              "v": 52
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Ready for Development"
+            },
+            {
+              "v": 1
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Ready for Production"
+            },
+            {
+              "v": 0
+            },
+            {
+              "v": 2
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Re-Opened"
+            },
+            {
+              "v": 8
+            },
+            {
+              "v": ""
+            }
+          ]
+        },
+        {
+          "c": [
+            {
+              "v": 3,
+              "f": "Grand Total"
+            },
+            {
+              "v": 65
+            },
+            {
+              "v": 2
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "title": "",
+      "isStacked": "true",
+      "fill": 20,
+      "displayExactValues": true,
+      "seriesType": "bars",
+      "width": 600,
+      "colors": [
+        "#92D050",
+        "#D17E7C"
+      ],
+      "vAxis": {
+        "title": "",
+        "gridlines": {
+          "count": 10
+        }
+      },
+      "orientation": "horizontal",
+      "hAxis": {
+        "title": ""
+      }
+    },
+    "formatters": {}
+  }
+}

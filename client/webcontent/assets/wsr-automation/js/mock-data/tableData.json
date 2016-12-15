@@ -1,0 +1,70 @@
+{
+	"date": "3rd May 2016",
+	"incidentData": [
+		[
+			"Weekly Report",
+			"21-Feb-16",
+			"1-Feb-16",
+			"2-Feb-16",
+			"3-Feb-16",
+			"4-Feb-16",
+			"5-Feb-16"
+		],
+		[
+			"Overall",
+			"Green",
+			"Green",
+			"Green",
+			"Green",
+			"Green",
+			"Green"
+		],
+		[
+			"Incidents",
+			"69",
+			"72",
+			"80",
+			"50",
+			"66",
+			"78"
+		],
+		[
+			"Problem Records",
+			"0",
+			"2",
+			"1",
+			"1",
+			"0",
+			"2"
+		]
+	],
+	"slaView": [
+		[
+			"Sev 1",
+			"4 hours",
+			"0",
+			"0",
+			"0"
+		],
+		[
+			"Sev 2",
+			"8 hours",
+			"1",
+			"1",
+			"1"
+		],
+		[
+			"Sev3/4",
+			"NA",
+			"68",
+			"NA",
+			"NA"
+		]
+	],
+	"incidentSummary": {
+		"Total Incidents": "9336",
+		"Active Incidents": "29",
+		"Non-Active Incidents": "9307"
+
+	}
+}

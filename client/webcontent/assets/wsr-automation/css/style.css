@@ -1,0 +1,242 @@
+.container {
+  width: 94%;
+  margin: 0 auto;
+  font-family: "Calibri", sans-serif; }
+
+#mnsLogo, #sapientLogo {
+  padding: 10px; }
+
+#mnsLogo {
+  width: 8%;
+  float: left; }
+  @media screen and (max-width: 1024px) {
+    #mnsLogo {
+      width: 11%; } }
+  @media screen and (max-width: 768px) {
+    #mnsLogo {
+      width: 14%; } }
+
+#sapientLogo {
+  width: 15%;
+  float: right; }
+  @media screen and (max-width: 1024px) {
+    #sapientLogo {
+      width: 21%; } }
+  @media screen and (max-width: 768px) {
+    #sapientLogo {
+      width: 27%; } }
+
+#printLogo {
+  float: right;
+  width: 32px;
+  cursor: pointer; }
+
+#edit-btn {
+  background: url("../images/edit-btn.jpg"); }
+
+.header-div {
+  background: #5c5858; }
+
+#editButton {
+  float: left;
+  width: 25px;
+  margin-left: 4px; }
+
+.edit-div {
+  width: auto;
+  height: auto;
+  padding-left: 4px; }
+
+.edit-button {
+  background-image: url("../images/edit-button.png");
+  height: 24px;
+  width: 24px;
+  float: left;
+  background-size: 100%;
+  margin-left: 4px;
+  cursor: pointer; }
+
+.content-div {
+  border: solid 1px #000000; }
+
+.sections h2.headlines {
+  border-bottom: none; }
+
+.headlines {
+  display: inline-block;
+  border-bottom: 1px solid black;
+  margin: 0;
+  padding: 2px 20px;
+  font-size: 1.2rem;
+  color: #ffffff; }
+
+caption {
+  background-color: #5c5858;
+  border: 1px solid black;
+  border-bottom: 0;
+  padding: 3px 0;
+  font-size: 1.1rem;
+  color: #ffffff; }
+
+table {
+  border-collapse: collapse;
+  margin-top: 20px; }
+  table tr:first-child {
+    font-weight: bold; }
+
+table, th, td {
+  border: 1px solid black; }
+
+th, td {
+  text-align: center;
+  padding: 5px; }
+
+#incidents tr:nth-child(even), #slaView tr:nth-child(even), #incidentSummary tr:nth-child(even) {
+  background-color: #ebdde2; }
+
+table tr:first-child td {
+  font-weight: bold; }
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+#incidents {
+  float: left;
+  width: 55%; }
+  @media screen and (max-width: 1024px) {
+    #incidents {
+      width: 100%;
+      float: none; } }
+
+#slaView, #incidentSummary {
+  float: right;
+  width: 40%; }
+  @media screen and (max-width: 1024px) {
+    #slaView, #incidentSummary {
+      width: 100%;
+      float: none; } }
+
+h1 {
+  font-size: 1.5rem; }
+
+.sections {
+  border: 1px solid black;
+  margin-top: 20px; }
+  .sections h2 {
+    border-bottom: 1px solid black;
+    margin: 0;
+    padding: 2px 9px;
+    background-color: #5c5858;
+    font-size: 1.2rem;
+    color: #ffffff; }
+  .sections h3 {
+    font-size: 1.1rem; }
+  .sections div {
+    /*padding:5px 20px;*/ }
+    .sections div span {
+      font-weight: bold; }
+
+.Green {
+  background-color: #92D050;
+  color: #ffffff; }
+
+.Red {
+  background-color: #ff0000;
+  color: #ffffff; }
+
+#incidentBurnRate, #weeklyAge {
+  float: left;
+  width: 48%; }
+
+#incidentAgeing, #releaseAlignment {
+  float: right;
+  width: 45%; }
+
+#incidentBurnRate caption, #incidentAgeing caption, #categorization caption, #weeklyAge caption, #releaseAlignment caption {
+  margin-bottom: 14px;
+  background-color: #92D050;
+  color: #000000;
+  font-weight: bold;
+  border: none; }
+
+#chartDiv {
+  width: 80%;
+  min-width: 100%; }
+
+#IncidentAgeChart {
+  float: right;
+  width: 80%;
+  min-width: 100%; }
+
+#CategorizationChart {
+  float: right;
+  /* width:50%;
+   min-width:500px;*/
+  margin-top: 50px; }
+
+#categorization {
+  float: left;
+  width: 38%; }
+  #categorization caption {
+    width: 124%; }
+  #categorization tr {
+    background-color: #ffffff; }
+  #categorization tr:last-child td {
+    font-weight: bold;
+    background-color: #B8CCE4; }
+  #categorization tr:first-child td {
+    background-color: #B8CCE4; }
+
+#releaseAlignment tr {
+  background-color: #ffffff; }
+#releaseAlignment tr:last-child td {
+  font-weight: bold;
+  background-color: #B8CCE4; }
+#releaseAlignment tr:first-child td {
+  background-color: #B8CCE4; }
+
+div.left-panel {
+  float: left;
+  width: 48%; }
+
+div.right-panel {
+  float: right;
+  width: 45%; }
+
+.panel-message {
+  background: #F4FFE4;
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(#F4FFE4, #DBFDA9);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#F4FFE4, #DBFDA9);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#F4FFE4, #DBFDA9);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#F4FFE4, #DBFDA9);
+  /* Standard syntax */
+  font-size: 13px;
+  border: solid 1px #98B954;
+  border-radius: 9px;
+  min-height: 178px;
+  padding: 3px;
+  margin: 10px 0; }
+  .panel-message p {
+    margin: 4px; }
+
+.left-chart {
+  display: inline-block;
+  float: left;
+  width: 48%; }
+
+.right-chart {
+  display: inline-block;
+  float: right;
+  width: 48%; }
+
+.chart-width {
+  width: 80%;
+  min-width: 100%; }
+
+/*# sourceMappingURL=style.css.map */

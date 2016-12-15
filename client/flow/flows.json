@@ -20,6 +20,16 @@
         "label": "Home Page"
     },
     {
+        "id": "61f45e89.e9959",
+        "type": "tab",
+        "label": "Flow 2"
+    },
+    {
+        "id": "73c2b0f6.41dab",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
         "id": "f359e7a3.637498",
         "type": "mongodb",
         "z": "ec253f80.0c828",
@@ -27,6 +37,30 @@
         "port": "27017",
         "db": "node-red",
         "name": "Mongo"
+    },
+    {
+        "id": "2903ae4c.f1dc52",
+        "type": "mongodb",
+        "z": "73c2b0f6.41dab",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "wsr-data",
+        "name": "wsrData"
+    },
+    {
+        "id": "c60cb185.3a934",
+        "type": "mongodb",
+        "z": "61f45e89.e9959",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "wsr-data",
+        "name": ""
+    },
+    {
+        "id": "3c8699.baeac968",
+        "type": "google-credentials",
+        "z": "73c2b0f6.41dab",
+        "displayName": "Harshita Sinha"
     },
     {
         "id": "fc8ab9ea.abc4b8",
@@ -41,22 +75,6 @@
         "wires": [
             [
                 "14dae9c3.2fa3f6"
-            ]
-        ]
-    },
-    {
-        "id": "c495f8a8.8322c8",
-        "type": "mongodb in",
-        "z": "ec253f80.0c828",
-        "mongodb": "f359e7a3.637498",
-        "name": "Get Data",
-        "collection": "controlm-jobs",
-        "operation": "aggregate",
-        "x": 309,
-        "y": 45,
-        "wires": [
-            [
-                "1befc500.4f886b"
             ]
         ]
     },
@@ -99,7 +117,7 @@
         "y": 148,
         "wires": [
             [
-                "c495f8a8.8322c8"
+                "1befc500.4f886b"
             ]
         ]
     },
@@ -116,22 +134,6 @@
         "wires": [
             [
                 "33f2dced.9b3cc4"
-            ]
-        ]
-    },
-    {
-        "id": "d992a9ee.552d88",
-        "type": "mongodb in",
-        "z": "ec253f80.0c828",
-        "mongodb": "f359e7a3.637498",
-        "name": "Get Data",
-        "collection": "alert",
-        "operation": "find",
-        "x": 302,
-        "y": 191,
-        "wires": [
-            [
-                "cf795a56.57ff58"
             ]
         ]
     },
@@ -174,7 +176,7 @@
         "y": 294,
         "wires": [
             [
-                "d992a9ee.552d88"
+                "cf795a56.57ff58"
             ]
         ]
     },
@@ -814,6 +816,996 @@
         "name": "",
         "x": 575.5,
         "y": 126,
+        "wires": []
+    },
+    {
+        "id": "90528b40.71bf48",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 81,
+        "y": 137,
+        "wires": [
+            [
+                "4c8c7e4a.825a5"
+            ]
+        ]
+    },
+    {
+        "id": "af49edbc.2d76b",
+        "type": "csv",
+        "z": "61f45e89.e9959",
+        "name": "CSV content",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Priority*,Impact*,Summary*,Incident ID*+,Status*,Status_Reason_Hidden,Vendor Ticket Number,Assignee+,Reported Date+,Responded Date+,Last Resolved Date,Closed Date,First Name+,Last Name+,Resolution Categorization Tier 1",
+        "x": 405.99998474121094,
+        "y": 147,
+        "wires": [
+            [
+                "bcb873c1.4728d"
+            ]
+        ]
+    },
+    {
+        "id": "bcb873c1.4728d",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 661,
+        "y": 157,
+        "wires": [
+            [
+                "adc8ebc6.0bd908"
+            ]
+        ]
+    },
+    {
+        "id": "adc8ebc6.0bd908",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "all-incidentsData",
+        "collection": "all-incidentsData",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 813,
+        "y": 217,
+        "wires": []
+    },
+    {
+        "id": "d817dbb1.da6128",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/getjson",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 78,
+        "y": 362,
+        "wires": [
+            [
+                "9f22e7a0.dfeec8"
+            ]
+        ]
+    },
+    {
+        "id": "2836f605.f49c7a",
+        "type": "mongodb in",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "all-incidentsData",
+        "operation": "find",
+        "x": 387,
+        "y": 403,
+        "wires": [
+            [
+                "25217875.7f4aa8"
+            ]
+        ]
+    },
+    {
+        "id": "25217875.7f4aa8",
+        "type": "json",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 585,
+        "y": 353,
+        "wires": [
+            [
+                "9c725998.321448"
+            ]
+        ]
+    },
+    {
+        "id": "f15f569b.599a58",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 840,
+        "y": 428,
+        "wires": []
+    },
+    {
+        "id": "9c725998.321448",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 719,
+        "y": 412,
+        "wires": [
+            [
+                "f15f569b.599a58"
+            ]
+        ]
+    },
+    {
+        "id": "9f22e7a0.dfeec8",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.skip=0;\nmsg.limit=0;\nmsg.payload={};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 144,
+        "y": 447,
+        "wires": [
+            [
+                "2836f605.f49c7a"
+            ]
+        ]
+    },
+    {
+        "id": "4c8c7e4a.825a5",
+        "type": "file in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "filename": "D:/csv-files/finalAllIncidents.csv",
+        "format": "utf8",
+        "x": 238.99998474121094,
+        "y": 193,
+        "wires": [
+            [
+                "af49edbc.2d76b"
+            ]
+        ]
+    },
+    {
+        "id": "a03109c0.920e28",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 96,
+        "y": 261,
+        "wires": [
+            [
+                "767d6075.fb70e"
+            ]
+        ]
+    },
+    {
+        "id": "5d4950a.34ac2b",
+        "type": "csv",
+        "z": "61f45e89.e9959",
+        "name": "CSV content",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Problem ID*+,Priority*,Impact*,Status*,Summary*,Notes,Assignee+,Target Date,Known Error Created,Submit Date,Submitter*,Vendor Ticket Number,Workaround,Resolution,Last Modified Date,Closed_Date",
+        "x": 430,
+        "y": 253,
+        "wires": [
+            [
+                "a5220d76.ca133"
+            ]
+        ]
+    },
+    {
+        "id": "a5220d76.ca133",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 576,
+        "y": 287,
+        "wires": [
+            [
+                "5a693377.c0db9c"
+            ]
+        ]
+    },
+    {
+        "id": "5a693377.c0db9c",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "problemRecord",
+        "collection": "problem-record",
+        "payonly": true,
+        "upsert": true,
+        "multi": true,
+        "operation": "store",
+        "x": 740,
+        "y": 278,
+        "wires": []
+    },
+    {
+        "id": "767d6075.fb70e",
+        "type": "file in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "filename": "D:/csv-files/Problem_Records.csv",
+        "format": "utf8",
+        "x": 238,
+        "y": 313,
+        "wires": [
+            [
+                "5d4950a.34ac2b"
+            ]
+        ]
+    },
+    {
+        "id": "e37dec89.e29c",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/getpr",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 65,
+        "y": 492,
+        "wires": [
+            [
+                "7886356b.5cdaec"
+            ]
+        ]
+    },
+    {
+        "id": "396c1d62.fa9472",
+        "type": "mongodb in",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "problem-record",
+        "operation": "find",
+        "x": 386,
+        "y": 510,
+        "wires": [
+            [
+                "f99c3d41.cd8f5"
+            ]
+        ]
+    },
+    {
+        "id": "f99c3d41.cd8f5",
+        "type": "json",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 531,
+        "y": 584,
+        "wires": [
+            [
+                "3b4abb3b.241914"
+            ]
+        ]
+    },
+    {
+        "id": "9af069b7.cb3328",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 837,
+        "y": 558,
+        "wires": []
+    },
+    {
+        "id": "3b4abb3b.241914",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 666,
+        "y": 530,
+        "wires": [
+            [
+                "9af069b7.cb3328"
+            ]
+        ]
+    },
+    {
+        "id": "7886356b.5cdaec",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.skip=0;\nmsg.limit=0;\nmsg.payload={};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 141,
+        "y": 577,
+        "wires": [
+            [
+                "396c1d62.fa9472"
+            ]
+        ]
+    },
+    {
+        "id": "6271414c.05e82",
+        "type": "http in",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "url": "/wsr",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 68,
+        "y": 143.99999237060547,
+        "wires": [
+            [
+                "6bd2d57e.2b6dcc",
+                "d2c752de.33b6e",
+                "ef656852.ef2638",
+                "b74868ad.b90be8"
+            ]
+        ]
+    },
+    {
+        "id": "31f9e20a.f1497e",
+        "type": "http response",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "x": 866.4999771118164,
+        "y": 149.49999523162842,
+        "wires": []
+    },
+    {
+        "id": "6bd2d57e.2b6dcc",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getjson",
+        "tls": "",
+        "x": 234.99998474121094,
+        "y": 110,
+        "wires": [
+            [
+                "90a005dd.2dc158"
+            ]
+        ]
+    },
+    {
+        "id": "90a005dd.2dc158",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier = 'all-incidents';\nconsole.log(msg.identifier);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 375.99998474121094,
+        "y": 100,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "d2c752de.33b6e",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getpr",
+        "tls": "",
+        "x": 258.75,
+        "y": 223.49999523162842,
+        "wires": [
+            [
+                "79cffcd0.139944"
+            ]
+        ]
+    },
+    {
+        "id": "79cffcd0.139944",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier=\"problem-record\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 366.99998474121094,
+        "y": 168,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "ce75b255.31529",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "if (!context.data){\n   context.data = {\n       csvdata: {}\n   };\n} \nif(msg.identifier === \"all-incidents\"){\n    context.data.csvdata.allIncident = msg.payload;\n} else if(msg.identifier === \"aecom\") {\n    context.data.csvdata.aecomData = msg.payload;\n} else if (msg.identifier === \"calendar-event\") {\n    context.data.csvdata.calendarEvent=msg.payload;\n}\nelse {\n    context.data.csvdata.probRecords = msg.payload;\n}\nif(context.data.csvdata.allIncident && context.data.csvdata.probRecords && context.data.csvdata.aecomData && context.data.csvdata.calendarEvent){\n     msg.payload = context.data;\n     context.data = null;\n     msg.incidentData=JSON.parse(msg.payload.csvdata.allIncident);\n     msg.probRecords=JSON.parse(msg.payload.csvdata.probRecords);\n    msg.aecomData=JSON.parse(msg.payload.csvdata.aecomData);\n    msg.calendarEvents=msg.payload.csvdata.calendarEvent;\nif (msg.req.url===\"/wsr\"){\n    return [msg,null];\n} else {\n    return [null,msg];\n} \n //   return msg;\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 500.2499237060547,
+        "y": 204,
+        "wires": [
+            [
+                "8f656c28.a4d46"
+            ],
+            [
+                "900c297a.032e28"
+            ]
+        ]
+    },
+    {
+        "id": "8f656c28.a4d46",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "var tableDatas={};\nvar incidentDataJson=[\n    [\"Weekly Report (MM/DD/YYYY)\"],\n    //[\"Overall\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\",\"Green\"],\n    [\"Incidents\"],\n    [\"Problem Records\"]\n];\nvar slaViewData= [\n\t[\"Sev1\",\"4hours\",,,0],\n\t[\"Sev2\",\"8hours\",,,0],\n\t[\"Sev3/4\",\"NA\",,\"NA\",\"NA\"]\n];\nvar incidentSummary = {};\n\t\t\n\nfunction getfulldate(today) { //returns date in mm/dd/yyyy format\n\tvar currentDate=today.getDate(),\n\t\tcurrentMonth=today.getMonth()+1;\n\tvar x=(currentMonth<10)?('0'+currentMonth):currentMonth;\n\tvar y=(currentDate<10)?('0'+currentDate):currentDate;\n\treturn (x+'/'+y+'/'+today.getFullYear());\n}\nfunction getLastSunday(d) { //returns last sunday date takes input as mm/dd/yyyy\n  \tvar t = new Date(d);\n  \tt.setDate(t.getDate() - t.getDay());\n  \treturn t;\n}\nfunction getDateStamp(dateStamp) {\n\tvar monthName=[\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"June\",\"July\", \"Aug\", \"Sept\", \"Oct\", \"Nov\", \"Dec\"];\n\tvar newDate= new Date(dateStamp);\n\treturn newDate.getDate()+\"-\"+monthName[newDate.getMonth()]+\"-\"+newDate.getFullYear();\n}\n\nvar lastSundaydate=getLastSunday(getfulldate(new Date()));\ntableDatas[\"date\"]=getDateStamp(lastSundaydate);\nvar lastSunday=getfulldate(lastSundaydate);\nvar i=2;\nincidentDataJson[0][i-1]=lastSunday;\ndo{\n\tvar newlastSundaydate=new Date(lastSundaydate.setDate(lastSundaydate.getDate() - 7));\n\tvar newlastSunday=getfulldate(newlastSundaydate);\n\tincidentDataJson[0][i]=newlastSunday;\n\tlastSundaydate=newlastSundaydate;\n\tlastSunday=newlastSunday;\n\ti++;\n} while(i<7);\n\n\n/***incident Count ***/\nvar firstEl=true,criticalCount=0,highCount=0,lowCount=0,totalIncidentCount=0,activeIncident=0;\n\nfor (var i=1;i<incidentDataJson[0].length;i++) {\n\n\tvar dateTo=incidentDataJson[0][i];\n    var to=new Date(dateTo);\n    var newto=new Date(dateTo);\n    var dateFrom=new Date(newto.setDate(newto.getDate() - 6));\n    var incidentCount=0;\n\tfor (var j=0;j<msg.incidentData.length;j++) {\n\t\tvar getDate=msg.incidentData[j][\"Reported Date+\"];\n\t\t//console.log(getDate);\n\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t    var check=new Date(daterange);\n\t    if(firstEl && (msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Critical\" || msg.incidentData[j][\"Priority*\"]===\"High\")) {\n    \t\ttotalIncidentCount++;\n        \tif(msg.incidentData[j][\"Status*\"]===\"Assigned\" || msg.incidentData[j][\"Status*\"]===\"Pending\") {\n\t\t\t\tactiveIncident++;\n\t\t\t}\n\t\t}\n\t\tif(check >= dateFrom && check <= to ) {\n        \tincidentCount++;\n        \tif(msg.incidentData[j][\"Priority*\"]===\"Critical\" && firstEl) {\n        \t\tcriticalCount++;\n        \t}\n        \tif(msg.incidentData[j][\"Priority*\"]===\"High\" && firstEl) {\n        \t\thighCount++;\n        \t}\n        \tif((msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Low\") && firstEl) {\n        \t\tlowCount++;\n        \t}\n\n\n    \t}\n\t}\n\tfirstEl=false;\n\tincidentDataJson[1][i]=incidentCount;\n}\n\n\n/***problem Count ***/\nvar problemArrayDraft=[],problemArrayReview=[];\n\tfor (var i=1;i<incidentDataJson[0].length;i++) {\n\t\tvar dateTo=incidentDataJson[0][i];\n        var to=new Date(dateTo);\n        var newto=new Date(dateTo);\n        var dateFrom=new Date(newto.setDate(newto.getDate() - 6));\n        var problemCount=0;\n\t\tfor (var j=0;j<msg.probRecords.length;j++) {\n\t\t\tvar getDate=msg.probRecords[j][\"Submit Date\"];\n\t\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t\t    var check=new Date(daterange);\n\t\t\tif(check >= dateFrom && check <= to && msg.probRecords[j][\"Status*\"]===\"Draft\" ) {\n            \tproblemCount++;\n        \t}\n        \tif(i===1) {\n        \t   if(check >= dateFrom && check <= to && msg.probRecords[j][\"Status*\"]===\"Draft\" ) {\n        \t      console.log(check);\n        \t       //console.log(new Date()-check);\n        \t       var oneDay = 24*60*60*1000;\n        \t       var dayy1=new Date(new Date().setHours(0,0,0,0));\n        \t       var diffDays = Math.round(Math.abs((dayy1.getTime() - check.getTime())/(oneDay)));\n                    msg.probRecords[j][\"ageings\"]=diffDays;\n            \t    problemArrayDraft.push(msg.probRecords[j]);\n        \t    } \n        \t    if(check >= dateFrom && check <= to && msg.probRecords[j][\"Status*\"]===\"Under Review\" ) {\n            \t    problemArrayReview.push(msg.probRecords[j]);\n        \t    }\n        \t}\n\t\t}\n\t\tincidentDataJson[2][i]=problemCount;\n\t}\n\n\n\t/***total incident count****/\n\t\tfor (var j=0;j<msg.aecomData.length;j++) {\n\t\t\tif(msg.aecomData[j][\"Priority*\"]===\"Low\") {\n\t\t\t\ttotalIncidentCount++;\n\t\t\t\tif(msg.aecomData[j][\"Status*\"]===\"Assigned\" || msg.aecomData[j][\"Status*\"]===\"Pending\") {\n\t\t\t\t\tactiveIncident++;\n\t\t\t\t}\n\t\t\t}\n\n\t\t}\n\n\nslaViewData[0][2]=criticalCount;\nslaViewData[0][3]=criticalCount;\nslaViewData[1][2]=highCount;\nslaViewData[1][3]=highCount;\nslaViewData[2][2]=lowCount;\nincidentSummary[\"Total Incidents\"]=totalIncidentCount;\nincidentSummary[\"Active Incidents\"]=activeIncident;\nincidentSummary[\"Non-Active Incidents\"]=totalIncidentCount-activeIncident;\ntableDatas[\"incidentData\"]=incidentDataJson;\ntableDatas[\"slaView\"]=slaViewData;\ntableDatas[\"incidentSummary\"]=incidentSummary;\n\nmsg.tableDatas= JSON.stringify(tableDatas);\nmsg.tableData=tableDatas;\nvar lastSun=getLastSunday(new Date());\nvar lastSun1=new Date(lastSun);\nvar lastSun2=new Date(lastSun1);\nvar lastSun3=new Date(lastSun1);\nvar nextWeek=new Date(lastSun2.setDate(lastSun2.getDate() + 7));\nvar lastWeek=new Date(lastSun3.setDate(lastSun3.getDate() - 10)); \n  var eventArray=[],lasteventArray=[];\n\nfor (var i=0;i<msg.calendarEvents.length;i++) {\n    //console.log(msg.calendarEvents[i].start.dateTime);\n   var imDate=Date.parse(msg.calendarEvents[i].start.dateTime);\n  var calendarDate=new Date(imDate);\n  if(calendarDate>lastSun1 && calendarDate<=nextWeek ) {\n      //console.log(calendarDate);\n      //console.log(msg.calendarEvents[i].summary)\n      eventArray.push({\"summary\":msg.calendarEvents[i].summary});\n  }\n  if(calendarDate<=lastSun1 && calendarDate>=lastWeek ) {\n          console.log(msg.calendarEvents[i].summary)\n\n     lasteventArray.push({\"summary\":msg.calendarEvents[i].summary});\n\n  }\n  \n \n}\nvar lastSun=getLastSunday(new Date());\nmsg.eventList=eventArray;\nmsg.lastEventList=lasteventArray;\nmsg.problemArrayDraft=problemArrayDraft;\nmsg.problemArrayReview=problemArrayReview;\n\n//var lastSun1=new Date(lastSun).toISOString();\n//var logDate=\n//console.log(new Date(lastSun).toISOString());\n//console.log(getLastSunday(new Date()));\n//console.log(msg.calendarEvents);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 567.4999847412109,
+        "y": 93,
+        "wires": [
+            [
+                "21b1217f.ab706e"
+            ]
+        ]
+    },
+    {
+        "id": "21b1217f.ab706e",
+        "type": "template",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>MNS-Reporting</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/wsr-automation/css/style.css\">\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js\"></script>\n    <script src=\"http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\"></script>\n    <script src=\"assets/wsr-automation/js/app.js\"></script>\n    <script src=\"assets/wsr-automation/js/executiveSummary/newcontroller.js\"></script>\n    <script src=\"assets/wsr-automation/js/common/createTable.directive.js\"></script>\n    <script src='http://js.nicedit.com/nicEdit-latest.js'></script>\n<script type=\"text/javascript\">\nvar tableDatas={{{tableDatas}}};\nvar dateDisplay=tableDatas.date;\n</script>\n</head>\n<body>\n    <main class=\"container\" ng-app=\"weeklyReports\" ng-controller=\"reportsCtrl\">\n        <script type=\"text/ng-template\" id=\"incidentDataTable.html\">\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"slaViewTable.html\">\n            <tr>\n                <td>Incident</td><td>SLA</td><td>Reported</td><td>Acheived</td><td>Breached</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"incidentSumTable.html\">\n            <tr>\n                <td ng-repeat=\"(key,value) in dataFromTable\" ng-bind=\"key\"></td>\n            </tr>\n            <tr>\n                <td ng-repeat=\"data in dataFromTable\" ng-bind=\"data\"></td>\n            </tr>\n        </script>\n         \n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/mns-logo.jpg\" alt=\"Marks and Spencer logo\" id=\"mnsLogo\">\n            <img src=\"assets/wsr-automation/images/sapient-nitro.png\" alt=\"SapientNitro logo\" id=\"sapientLogo\">\n        </div>\n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/print-icon.png\" alt=\"Print Logo\" id=\"printLogo\" ng-click=\"printOption()\">\n        </div>\n\n        <section class=\"clearfix\">\n            <table id=\"incidents\">\n                <caption>Incidents originating in Week ending {{tableData.date}}</caption>\n                <tbody id=\"incidentDataTable\" table-dir dataparam=tableDatas.incidentData></tbody>\n            </table>\n            <table id=\"slaView\">\n                <caption>SLA View for Week ending {{tableData.date}}</caption>\n                <tbody id=\"slaViewTable\" table-dir dataparam=\"tableDatas.slaView\"></tbody>\n            </table>\n            <table id=\"incidentSummary\" style=\"clear: both;\">\n                <caption>Incident Summary till {{tableData.date}}</caption>\n                <tbody id=\"incidentSumTable\" table-dir dataparam=\"tableDatas.incidentSummary\"></tbody>\n            </table>\n        </section>\n\n        <section>\n            <h1>\n                M&S eCom Support Weekly Status Report - Week Ending  {{tableData.date}}\n            </h1>\n            <div id=\"keyUpdates\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key updates</h2>\n                </div>\n\n                <div id=\"myArea1\" class=\"edit-div\">\n                    <div>\n                        <h3>Progress Last Week RAYG : GREEN</h3>\n                        <ul>\n                            <li>Total <span>69</span> incidents were raised in last week. Pending triage incidents are currently <span>29</span>.</li>\n                            <li>1 Sev 2's were raised last week.\n                                <ul>\n                                    <li>Sev 2 | INC000021527174 | EMAIL-PROBE (Site Confidence Alert:Script Step[28065111]) - Site Confidence Alert Script Step - Site Confidence Journey was failing</li>\n                                </ul>\n                            </li>\n                        </ul>\n                        <h3>Business Events</h3>\n                        <ul>\n                            <li>NA</li>\n                        </ul>\n                        \n                        <!--<ul>\n                            <li><span>2</span> Open (0 Draft ,2 Pending, 0 Under Review)</li>\n                        </ul>-->\n                        \n                        <!--<ul>\n                            <li>PROD | B&C | THROTTLE | Moving Mobile/App to -6 and Basket change <span>21st Mar</span></li>\n                            <li>PROD | Throttling to 100% New Basket for CS and Stores <span>23rd Mar</span></li>\n                            <li>PROD | CM-182 | SPARKS - FE change for Sparks FAQs link <span>24th Mar</span></li>\n                            <li>PROD | CM-183 | Whitelisting Omniture rest API Url for Prod Servers <span>24th Mar</span></li>\n                            <li>PROD | Timezone change to BST <span>27th Mar</span></li>\n                            <li>SIT3 | R26 Deployment <span>21st Mar</span></li>\n                            <li>SIT3/B | Apply RHEL Patch <span>23rd Mar</span></li>\n                        </ul>-->\n                    </div>\n                </div>\n                <div class=\"noneditable-container\" style=\"border-top:solid 1px black;padding-left:4px;\">\n\n                        <h3>Problem Record</h3>\n                        <table>\n\n                            {{#problemArrayDraft.length}}\n\n                                        <tr>\n                                            <td>Problem ID</td>\n                                            <td>Summary</th>\n                                            <td>Assignee</td>\n                                            <td>Status</td>\n                                            <td>Ageing</td>\n                                            <td>Open Date</td>\n\n                                        </tr>\n                            {{/problemArrayDraft.length}}\n                            {{#problemArrayDraft}}\n                                <tr> \n                                    <td>{{Problem ID*+}}</td>\n                                    <td>{{Summary*}}</td>\n                                    <td>{{Assignee+}}</td>\n                                    <td>{{Status*}}</td>\n                                    <td>{{ageings}}</td>\n                                    <td>{{Submit Date}}</td>\n\n                                </tr>\n                            {{/problemArrayDraft}}\n                        </table>\n\n                        \n                        <h3>Environments</h3>\n                        <ul>\n                            {{#lastEventList}}\n                            <li>\n                                {{summary}}\n                            </li>\n                            {{/lastEventList}}\n                        </ul>\n                </div>\n            </div>\n            <div id=\"nextWeekPlan\" class=\"sections\" >\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\"> Plan for next week</h2>\n                </div>\n\n                <div id=\"nextWeek\" class=\"edit-div\" >\n                    <h3>Business Events</h3>\n                    <ul>\n                        <li>NA</li>\n                    </ul>\n                        \n                    <!--<ul>\n                        <li>PROD | RHEL Patching DR <span>28th Mar</span></li>\n                        <li>PROD | Bing SIte Authorisation Update in AKAMAI <span>29th Mar</span></li>\n                        <li>PROD | RHEL Patching BURST <span>29th Mar</span></li>\n                        <li>PROD | R26 Deployment <span>30th Mar</span></li>\n                        <li>DR | QA3 | R26 Deployment <span>31st Mar</span></li>\n                    </ul>-->\n                </div>\n                <div class=\"noneditable-container\" style=\"border-top:solid 1px black;padding-left:4px;\">\n                    <h3>Environments</h3>\n                        <ul>\n                            {{#eventList}}\n                            <li>\n                                {{summary}}\n                            </li>\n                            {{/eventList}}\n                        </ul>\n                </div>\n            </div>\n            <div id=\"risksIssues\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key risks/issues</h2>\n                </div>\n\n                <div id=\"risk\" class=\"edit-div\">\n                    <ul>\n                        <!--<li>Single Prod/ non-Prod account for Bing request. There is threshhold of 50 requested in 24 hrs</li>\n                        <li>Stageprop session killed twice</li>-->\n                        <li>NA</li>\n                    </ul>\n                </div>\n            </div>\n            <div id=\"accomplishments\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Accomplishments</h2>\n                </div>\n\n                <div id=\"accomp\" class=\"edit-div\">\n                    <ul>\n                        <!--<li>Timezone changed from GMT to BST has been successfully completed on 27th March.</li>-->\n                                                <li>NA</li>\n\n                    </ul>\n                </div>\n            </div>\n            <div id=\"keyDependencies\" class=\"sections\">\n                <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Key dependencies</h2>\n                </div>\n                <div id=\"keyDepend\" class=\"edit-div\">\n                    <ul>\n                                            <li>NA</li>\n\n                    </ul>\n                </div>\n            </div>\n        </section>\n    </main>\n</body>\n</html>\n\n\n\n",
+        "x": 694.2499771118164,
+        "y": 108.00000286102295,
+        "wires": [
+            [
+                "31f9e20a.f1497e"
+            ]
+        ]
+    },
+    {
+        "id": "54d01954.044fc8",
+        "type": "http in",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "url": "/trends",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 75,
+        "y": 322,
+        "wires": [
+            [
+                "d2c752de.33b6e",
+                "ef656852.ef2638",
+                "6bd2d57e.2b6dcc",
+                "b74868ad.b90be8"
+            ]
+        ]
+    },
+    {
+        "id": "21270523.8442da",
+        "type": "template",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>MNS-Reporting</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/wsr-automation/css/style.css\">\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js\"></script>\n    <script src=\"http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\"></script>\n    <script src=\"assets/wsr-automation/js/app.js\"></script>\n    <script src=\"assets/wsr-automation/js/ng-google-chart.min.js\"></script>\n    <script src=\"assets/wsr-automation/js/trends/newtrendscontroller.js\"></script>\n    <script src=\"assets/wsr-automation/js/common/createTable.directive.js\"></script>\n        <script src='http://js.nicedit.com/nicEdit-latest.js'></script>\n\n<script type=\"text/javascript\">\nvar chartObject={{{chartObject}}};\nvar chartObject1={{{chartObject1}}};\nvar chartObject3={{{chartObject3}}}\nvar tableDatas={{{tableDatas}}};\nvar dateDisplay=tableDatas.date;\n//console.log(dateDisplay);\n  \n</script>\n</head>\n<body>\n    <main class=\"container\" ng-app=\"trendsReport\" ng-controller=\"trendsCtrl\">\n        <script type=\"text/ng-template\" id=\"incidentBurnTable.html\">\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"incidentAgeTable.html\">\n            <tr>\n                <td>Ageing</td><td>0-7 Days</td><td>8-14 Days</td><td>15-30 Days</td><td>30+ Days</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"incidentSumTable.html\">\n            <tr>\n                <td ng-repeat=\"(key,value) in dataFromTable\" ng-bind=\"key\"></td>\n            </tr>\n            <tr>\n                <td ng-repeat=\"data in dataFromTable\" ng-bind=\"data\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"categorizationTable.html\">\n            <tr>\n                <td>Categorization</td><td>Current Week</td><td>Week ending 20th Mar</td><td>Week ending 6th Mar</td><td>Week ending 28th Feb</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"weeklyAgeingTable.html\">\n            <tr>\n                <td>Ageing</td><td>0-7 Days</td><td>8-14 Days</td><td>15-30 Days</td><td>30+ Days</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <script type=\"text/ng-template\" id=\"releaseAlignmentTable.html\">\n            <tr>\n                <td>Row Labels</td><td>Not Aligned</td><td>Release 26</td><td>Grand Total</td>\n            </tr>\n            <tr ng-repeat=\"data in dataFromTable\">\n                <td ng-repeat=\"values in data track by $index\" ng-class=\"values\" ng-bind=\"values\"></td>\n            </tr>\n        </script>\n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/mns-logo.jpg\" alt=\"Marks and Spencer logo\" id=\"mnsLogo\">\n            <img src=\"assets/wsr-automation/images/sapient-nitro.png\" alt=\"SapientNitro logo\" id=\"sapientLogo\">\n        </div>\n        <div class=\"clearfix\">\n            <img src=\"assets/wsr-automation/images/print-icon.png\" alt=\"Print Logo\" id=\"printLogo\" ng-click=\"printOption()\">\n        </div>\n\n        <section class=\"clearfix\">\n            <table id=\"incidentBurnRate\">\n                <caption>Overall Incident Burn Rate - Weekly View  (Sev3&4)  </caption>\n                <tbody id=\"incidentBurnTable\" table-dir dataparam=\"tableDatas.incidentBurn\"></tbody>\n                <tfoot>\n                    <tr>\n                      <td>Total Open</td>\n                      <td>{{totalOpen}}</td>\n                    </tr>\n                 </tfoot>\n            </table>\n            <table id=\"incidentAgeing\">\n                <caption>Overall Incident Ageing for Sev3 & 4</caption>\n                <tbody id=\"incidentAgeTable\" table-dir dataparam=\"tableDatas.incidentAgeing\"></tbody>\n            </table>\n        </section>\n        <section class=\"clearfix\">\n            <div class=\"panel-message left-panel\">\n                {{#summaryInfo}}\n                    <p>{{oneWeekCritical}} Sev 1 was raised last week</p>\n                    <p>{{oneWeekHigh}} Sev 2 was raised last week</p>\n                    {{#criticalIncident}}\n                    <p>-{{Priority}} | {{incidentId}} | {{summary}}</p>\n                    {{/criticalIncident}}\n                    {{#highIncident}}\n                    <p>-{{Priority}} | {{incidentId}} | {{summary}}</p>\n                    {{/highIncident}}\n                {{/summaryInfo}}\n            </div>\n            <div class=\"panel-message right-panel \">\n            <div class=\"header-div\">\n                    <span class=\"edit-button\"></span>\n                    <h2 class=\"headlines\">Editable</h2>\n            </div>\n            <div id=\"editPanel1\" class=\"edit-div\">\n               <!-- <p>- Incident ageing  has been  under control</p>\n                <p>- Incident older than 15 days</p>\n                <p>- INC000019293754 -There is a spike in the 500 error for the command /ordercalculate. There are about 68 customer sessions until now out of which 66 customers have abandoned their basket</p>\n                <p>- INC000018829506 | Sev3 | Increase in count of 404  after R24</p>-->\n            </div>\n            </div>\n        </section>\n        <section class=\"left-chart\">\n            <div id=\"chartDiv\" class=\"chart-width\" google-chart chart=\"chartObject\" style=\"{{chart.cssStyle}}\"/>\n        </section>\n        <section class=\"right-chart\">\n            <div id=\"IncidentAgeChart\" class=\"chart-width\" google-chart chart=\"chartObject1\" style=\"{{chart.cssStyle}}\"/>\n\n        </section>\n        <section class=\"clearfix\">\n            <table id=\"categorization\">\n                <caption>Categorization of Incidents - Weekly View  </caption>\n                <tbody id=\"categorizationTable\" table-dir dataparam=\"trendsData.categoryIncident\"></tbody>\n            </table>\n            <section class=\"right-chart\"> \n                <div id=\"CategorizationChart\" class=\"chart-width\" google-chart chart=\"trendChart.chartObject2\" style=\"{{chart.cssStyle}}\"/>\n            </section>\n        </section>\n        <section class=\"clearfix\">\n            <div class=\"panel-message left-panel\">\n                <p>71  Incidents closeds</p>\n                <p>- 12 Connectivity Issue 3rd Party - Site Confidence</p>\n                <p>- 12 Misdirected/ Invalid call</p>\n                <p>- 12 Known Error</p>\n                <p>- 11 Duplicate calls</p>\n            </div>\n        </section>\n        <section class=\"clearfix\">\n            <table id=\"weeklyAge\">\n                <caption>Overall Problem Record Ageing - Weekly View  </caption>\n                <tbody id=\"weeklyAgeingTable\" table-dir dataparam=\"tableDatas.probrecordAgeing\"></tbody>\n            </table>\n            <!--<table id=\"releaseAlignment\">\n                <caption>Incidents - Release Alignment : as per JIRA  </caption>\n                <tbody id=\"releaseAlignmentTable\" table-dir dataparam=\"\"></tbody>\n            </table>-->\n        </section>\n         <section class=\"left-chart\" style=\"width:100%\">\n            <div id=\"weeklyAgeingChart\" class=\"chart-width\" google-chart chart=\"chartObject3\" style=\"{{chart.cssStyle}}\"/>\n        </section>\n        <!--<section class=\"right-chart\">\n            <div id=\"releaseAlignChart\" class=\"chart-width\" google-chart chart=\"trendChart.chartObject4\" style=\"{{chart.cssStyle}}\"/>\n        </section>-->\n        <section class=\"clearfix\">\n            <div class=\"panel-message left-panel \">\n                <div class=\"header-div\">\n                        <span class=\"edit-button\"></span>\n                        <h2 class=\"headlines\">Editable</h2>\n                </div>\n            <div id=\"editPanel2\" class=\"edit-div\">\n               <!-- <p>- 0  Under Review for Closure</p>\n                <p>- 0 Draft</p>\n                <p>- 0 Under Investigation</p>\n                <p>- 2 Pending with 3rd parties</p>\n                <p>- 0 Assigned</p>-->\n            </div>\n            </div>\n            <!--<div class=\"panel-message right-panel\">\n               <p>- 65 incidents are not aligned to any Release</p>\n                <p>- 0 Pending - Client Action</p>\n                <p>- 1 Pending 3rd Party</p>\n                <p>- 0 Future Enhancement</p>\n                <p>- 0 Client Hold</p>\n                <p>- 0 Under Monitoring</p>\n                <p>- 0 In progress</p>\n            </div>-->\n        </section>\n    </main>\n</body>\n</html>\n",
+        "x": 696.4999771118164,
+        "y": 189.2499966621399,
+        "wires": [
+            [
+                "31f9e20a.f1497e"
+            ]
+        ]
+    },
+    {
+        "id": "900c297a.032e28",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "var tableDatas={};\nvar incidentBurn=[\n    [\"Weekly Report (MM/DD/YYYY)\"],\n    [\"New\"],\n    [\"Resolved\"]/*,\n    [\"Open\"],\n    [\"Total Open\"]*/\n];\nvar incidentAgeing= [\n\t[\"Incident Count\"]\n];\nvar probrecordAgeing= [\n\t[\"Problem Records\"]\n];\n\tfunction nextChar(c) {\n    \treturn String.fromCharCode(c.charCodeAt(0) + 1);\n\t}\n\n\tvar chartObject ={\n\t\"type\": \"LineChart\",\n    \"displayed\": false,\n    \"data\": {\n    \t\"cols\": [{\n          \"id\": \"A\",\n          \"label\": \"NEW A\",\n          \"type\": \"string\"\n        }\n\t],\n    \t\"rows\":[]\n    },\n    \"options\": {\n      \"title\": \"Sales per month\",\n      \"isStacked\": \"true\",\n      \"fill\": 20,\n      \"legend\": {\n        \"position\": \"bottom\"\n      },\n      \"colors\": [\n        \"#4A7EBB\",\n        \"#ff0000\",\n        \"#98B954\",\n        \"#7D60A0\"\n      ],\n      \"displayExactValues\": true,\n      \"vAxis\": {\n        \"title\": \"\",\n        \"gridlines\": {\n          \"count\": 10\n        }\n      },\n      \"hAxis\": {\n        \"title\": \"\"\n      }\n    },\n    \"formatters\": {}\n\t};\n\tvar chartObject1= {\n    \"type\": \"BarChart\",\n    \"displayed\": false,\n    \"data\": {\n      \"cols\": [\n        {\n          \"id\": \"A\",\n          \"label\": \"NEW A\",\n          \"type\": \"string\"\n        }/*,\n        {\n          \"id\": \"B\",\n          \"label\": \"Incident Count\",\n          \"type\": \"number\"\n        }*/\n      ],\n      \"rows\": []\n    },\n    \"options\": {\n      \"title\": \"\",\n      \"isStacked\": \"false\",\n      \"fill\": 20,\n      \"displayExactValues\": true,\n      \"colors\": [\n        \"#92D050\"\n      ],\n      \"vAxis\": {\n        \"title\": \"\",\n        \"gridlines\": {\n          \"count\": 10\n        }\n      },\n      \"orientation\": \"horizontal\",\n      \"hAxis\": {\n        \"title\": \"\"\n      }\n    },\n    \"formatters\": {}\n  }\n\n  var chartObject3 = {\n    \"type\": \"BarChart\",\n    \"displayed\": false,\n    \"data\": {\n      \"cols\": [\n        {\n          \"id\": \"A\",\n          \"label\": \"weeklyAgeing\",\n          \"type\": \"string\"\n        },\n        {\n          \"id\": \"B\",\n          \"label\": \"Problem Records\",\n          \"type\": \"number\"\n        }\n      ],\n      \"rows\": []\n    },\n    \"options\": {\n      \"title\": \"Problem Record Ageing\",\n      \"isStacked\": \"false\",\n      \"fill\": 20,\n      \"displayExactValues\": true,\n      \"width\": 600,\n      \"colors\": [\n        \"#92D050\"\n      ],\n      \"vAxis\": {\n        \"title\": \"\",\n        \"gridlines\": {\n          \"count\": 4\n        }\n      },\n      \"orientation\": \"horizontal\",\n      \"hAxis\": {\n        \"title\": \"\"\n      }\n    },\n    \"formatters\": {}\n  }\n\n\nfunction getfulldate(today) { //returns date in mm/dd/yyyy format\n\tvar currentDate=today.getDate(),\n\t\tcurrentMonth=today.getMonth()+1;\n\tvar x=(currentMonth<10)?('0'+currentMonth):currentMonth;\n\tvar y=(currentDate<10)?('0'+currentDate):currentDate;\n\treturn (x+'/'+y+'/'+today.getFullYear());\n}\nfunction getLastSunday(d) { //returns last sunday date takes input as mm/dd/yyyy\n  \tvar t = new Date(d);\n  \tt.setDate(t.getDate() - t.getDay());\n  \treturn t;\n}\nfunction getDateStamp(dateStamp) {\n\tvar monthName=[\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"June\",\"July\", \"Aug\", \"Sept\", \"Oct\", \"Nov\", \"Dec\"];\n\tvar newDate= new Date(dateStamp);\n\treturn newDate.getDate()+\"-\"+monthName[newDate.getMonth()]+\"-\"+newDate.getFullYear();\n}\n\nvar lastSundaydate=getLastSunday(getfulldate(new Date()));\ntableDatas[\"date\"]=getDateStamp(lastSundaydate);\nvar lastSunday=getfulldate(lastSundaydate);\nvar i=2;\nincidentBurn[0][i-1]=lastSunday;\ndo{\n\tvar newlastSundaydate=new Date(lastSundaydate.setDate(lastSundaydate.getDate() - 7));\n\tvar newlastSunday=getfulldate(newlastSundaydate);\n\tincidentBurn[0][i]=newlastSunday;\n\tlastSundaydate=newlastSundaydate;\n\tlastSunday=newlastSunday;\n\ti++;\n} while(i<7);\n\nvar criticalCount=0,highCount=0,lowCount=0,incidentAgePopulate=true,incidentAge1=0,incidentAge2=0,incidentAge3=0,incidentAge4=0,ProbRecordAge1=0,ProbRecordAge2=0,ProbRecordAge3=0,ProbRecordAge4=0,oneWeekCritical=0,oneWeekHigh=0,criticalIncidentObj=[],highIncidentObj=[];\n\n/***Find date range***/\nvar todayDate=new Date();\ntodayDate.setHours(0,0,0);\nvar day1=new Date(todayDate.setDate(todayDate.getDate() - 1)).setHours(0,0,0,0);\nvar day7=new Date(todayDate.setDate(todayDate.getDate() - 7)).setHours(0,0,0,0);\nvar day8=new Date(todayDate.setDate(todayDate.getDate() - 1)).setHours(0,0,0,0);\nvar day14=new Date(todayDate.setDate(todayDate.getDate() - 6)).setHours(0,0,0,0);\nvar day15=new Date(todayDate.setDate(todayDate.getDate() - 1)).setHours(0,0,0,0);\nvar day30=new Date(todayDate.setDate(todayDate.getDate() - 6)).setHours(0,0,0,0);\nvar today=new Date();\nvar day6=new Date(new Date().setDate(new Date().getDate()-25));\nfor (var i=1;i<incidentBurn[0].length;i++) {\n\tvar dateTo=incidentBurn[0][i];\n    var to=new Date(dateTo);\n    var newto=new Date(dateTo);\n    var dateFrom=new Date(newto.setDate(newto.getDate() - 6));\n\n    var incidentCount=0,d13=0,e13=0,b13=0,c13=0,d14=0,e14=0,f3a=0,f3b=0,f4a=0,f4b=0,f5a=0,f5b=0;\n\tfor (var j=0;j<msg.incidentData.length;j++) {\n\t\tvar getDate=msg.incidentData[j][\"Reported Date+\"];\n\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t    var check=new Date(daterange);\n\t    var getClosedDate=msg.incidentData[j][\"Closed Date\"];\n\n\t    /****incident ageing****/\n\t    if (incidentAgePopulate && (msg.incidentData[j][\"Status*\"]===\"Assigned\" || msg.incidentData[j][\"Status*\"]===\"Pending\")) {\n\t\t\t\n\t\t\tif(check<=day1 && check>=day7) {\n\t\t\t\tincidentAge1++;\n\t\t\t} else if (check<=day8 && check>=day14) {\n\t\t\t\tincidentAge2++;\n\t\t\t} else if (check<=day15 && check>=day30) {\n\t\t\t\tincidentAge3++\n\t\t\t} else incidentAge4++;\n\t\t} else if (incidentAgePopulate) {\n\t\t    //console.log(day6);\n\n\t\t\tif(check<=today && check>=day6) {\n\n\t\t\t\tif(msg.incidentData[j][\"Priority*\"]===\"Critical\") {\n\t\t\t\t\toneWeekCritical++;\n\t\t\t\t\tcriticalIncidentObj.push({\"Priority\":\"Sev1\",\"incidentId\":msg.incidentData[j][\"Incident ID*+\"],\"summary\":msg.incidentData[j][\"Summary*\"]});\n\n\t\t\t\t}\n\t\t\t\telse if (msg.incidentData[j][\"Priority*\"]===\"High\"){\n\t\t\t\t\toneWeekHigh++;\n\t\t\t\t\thighIncidentObj.push({\"Priority\":\"Sev2\",\"incidentId\":msg.incidentData[j][\"Incident ID*+\"],\"summary\":msg.incidentData[j][\"Summary*\"]});\n\t\t\t\t}\n\t\t\t} \n\t\t}\n\t\t/**/\n\n\t    if(msg.incidentData[j][\"Status*\"]===\"Assigned\" && (msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Critical\" || msg.incidentData[j][\"Priority*\"]===\"High\"))\n\t\t{\n\t\t\tf3a++;\n\t\t}\n\t\telse if(msg.incidentData[j][\"Status*\"]===\"In Progress\" && (msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Critical\" || msg.incidentData[j][\"Priority*\"]===\"High\"))\n\t\t{\n\t\t\tf4a++;\n\t\t} \n\t\telse if (msg.incidentData[j][\"Status*\"]===\"Pending\" && (msg.incidentData[j][\"Priority*\"]===\"Medium\" || msg.incidentData[j][\"Priority*\"]===\"Critical\" || msg.incidentData[j][\"Priority*\"]===\"High\"))\n\t\t{\n\t\t\tf5a++;\n\t\t} \n\n\t    if(getClosedDate!==undefined) {\n\t    \tvar ClosedDaterange=new Date(getClosedDate.substring(0, getClosedDate.indexOf(' ')));\n\t    \tif(ClosedDaterange >= dateFrom && ClosedDaterange <= to) {\n\t    \t\tif(msg.incidentData[j][\"Priority*\"]===\"Medium\")\n\t\t\t\t{\n\t\t\t\t\td14++;\n\t\t\t\t}\n    \t\t}\n\n\t    }\n\t\tif(check >= dateFrom && check <= to ) {\n\t\t\tif(msg.incidentData[j][\"Priority*\"]===\"Medium\")\n\t\t\t{\n\t\t\t\td13++;\n\t\t\t}\n\t\t\tif(msg.incidentData[j][\"Priority*\"]===\"Low\")\n\t\t\t{\n\t\t\t\te13++;\n\t\t\t}\n\t\t\tif(msg.incidentData[j][\"Priority*\"]===\"Critical\")\n\t\t\t{\n\t\t\t\tb13++;\n\t\t\t}\n\t\t\tif(msg.incidentData[j][\"Priority*\"]===\"High\")\n\t\t\t{\n\t\t\t\tc13++;\n\t\t\t}\n        \t\n    \t}\n    \t\n\t}\n\tincidentAgePopulate=false;\n\tfor (var j=0;j<msg.aecomData.length;j++) {\n\t\tvar getDate=msg.aecomData[j][\"Reported Date+\"];\n\t    var daterange=getDate.substring(0, getDate.indexOf(' '));\n\t    var check=new Date(daterange);\n\t    var getClosedDate=msg.aecomData[j][\"Last Modified Date\"];\n\n\t    if(msg.aecomData[j][\"Status*\"]===\"Assigned\" && msg.aecomData[j][\"Priority*\"]===\"Low\") {\n\t    \tf3b++;\n\t    }\n\t    \n\t    else if(msg.aecomData[j][\"Status*\"]===\"In Progress\" && msg.aecomData[j][\"Priority*\"]===\"Low\") {\n\t    \tf4b++;\n\t    }\n\t    else if (msg.aecomData[j][\"Status*\"]===\"Pending\" && msg.aecomData[j][\"Priority*\"]===\"Low\") {\n\t    \tf5b++;\n\t    }\n\n\t    if(getClosedDate !==undefined) {\n\t    \tvar ClosedDaterange=new Date(getClosedDate.substring(0, getClosedDate.indexOf(' ')));\n\t    \tif(ClosedDaterange >= dateFrom && ClosedDaterange <= to) {\n\t    \t\tif(msg.aecomData[j][\"Priority*\"]===\"Low\" && (msg.aecomData[j][\"Status*\"]===\"Resolved\" || msg.incidentData[j][\"Status*\"]===\"Closed\"))\n\t\t\t\t{\n\t\t\t\t\te14++;\n\t\t\t\t}\n    \t\t}\n\t    }\n\t\tif(check >= dateFrom && check <= to ) {\n\t\t\t\n\t\t\tif(msg.aecomData[j][\"Priority*\"]===\"Low\")\n\t\t\t{\n\t\t\t\te13++;\n\t\t\t}\n\t\t\t\n        \t\n    \t}\n    \t\n\t}\n\tincidentBurn[1][i]=d13+e13;\n\tincidentBurn[2][i]=d14+e14;\n\t//incidentBurn[3][i]=f3a+f3b+f4a+f4b;\n\tmsg.totalOpen=f3a+f3b+f4a+f4b+f5a+f5b;\n}\n//populating incidentAgeing \nincidentAgeing[0].push(incidentAge1,incidentAge2,incidentAge3,incidentAge4);\n/***populating incidentAgeingChart data***/\n  var alpha='A';\n\tfor (var i=0;i<incidentAgeing.length;i++) {\n\t\tvar charObj=\n\t\t{\n          \"id\": \"\",\n          \"label\": \"\",\n          \"type\": \"number\"\n        };\n\t    charObj.id=nextChar(alpha);\n\t    alpha=nextChar(alpha);\n\t    charObj.label=incidentAgeing[i][0];\n\t    chartObject1.data.cols.push(charObj);\n\t}\n\tvar daysCount=[\"0-7 Days\",\"8-14 Days\",\"15-30 Days\",\"30+ Days\"];\n\tfor (var j=1;j<incidentAgeing[0].length;j++){\n\t\tvar abc={\n\t\t\"c\": []\n\t\t};\n\t\tvar obj= {\n          \"v\": j-1,\n          \"f\": daysCount[j-1]\n        }\n        var obj1=\n        {\n          \"v\": incidentAgeing[0][j]\n        };\n\t\t\n\t\tabc.c.push(obj);\n\t\tabc.c.push(obj1);\n\t\tchartObject1.data.rows.push(abc);\n\t}\n/***populating incidentBurnChart data***/\n\nvar alpha='A';\n\nfor (var i=1;i<incidentBurn.length;i++) {\n\tvar charObj=\n\t{\n      \"id\": \"\",\n      \"label\": \"\",\n      \"type\": \"number\"\n    };\n    charObj.id=nextChar(alpha);\n    alpha=nextChar(alpha);\n    charObj.label=incidentBurn[i][0];\n    chartObject.data.cols.push(charObj);\n}\n\nfor (var i=1;i<incidentBurn[0].length;i++) {\n\tvar abc={\n\t\"c\": []\n\t};\n\tfor (var j=0;j<incidentBurn.length;j++){\n\t\tif(i===1 && j===0) {\n\t\t\tvar obj={\n              \"v\": 0,\n              \"f\": incidentBurn[j][i]\n            }\n\t\t} else {\n\t\t\tvar obj={\n\t\t\t\t\"v\":incidentBurn[j][i]\n\t\t\t}\n\t\t}\n\t\tabc.c.push(obj);\n\t}\n\tchartObject.data.rows.push(abc);\n}\n/***probrecord Ageing***/\nfor (var i=0;i<msg.probRecords.length;i++) {\n    var getDate=msg.probRecords[i][\"Submit Date\"];\n    var daterange=getDate.substring(0, getDate.indexOf(' '));\n    var check=new Date(daterange);\n    /****probRecord ageing****/\n    if (msg.probRecords[i][\"Status*\"]===\"Draft\" || msg.probRecords[i][\"Status*\"]===\"Under Review\"){\n\t\tif(check<=day1 && check>=day7) {\n\t\t\tProbRecordAge1++;\n\t\t} else if (check<=day8 && check>=day14) {\n\t\t\tProbRecordAge2++;\n\t\t} else if (check<=day15 && check>=day30) {\n\t\t\tProbRecordAge3++\n\t\t} else ProbRecordAge4++;\n\t}\n\t\n}\nprobrecordAgeing[0].push(ProbRecordAge1,ProbRecordAge2,ProbRecordAge3,ProbRecordAge4);\n\nfor (var j=1;j<probrecordAgeing[0].length;j++){\n\t\tvar abc={\n\t\t\"c\": []\n\t\t};\n\t\tvar obj= {\n          \"v\": j-1,\n          \"f\": daysCount[j-1]\n        }\n        var obj1=\n        {\n          \"v\": probrecordAgeing[0][j]\n        };\n\t\t\n\t\tabc.c.push(obj);\n\t\tabc.c.push(obj1);\n\t\tchartObject3.data.rows.push(abc);\n\t}\nmsg.chartObject=JSON.stringify(chartObject);\nmsg.chartObject1=JSON.stringify(chartObject1);\nmsg.chartObject3=JSON.stringify(chartObject3);\ntableDatas[\"incidentBurn\"]=incidentBurn;\ntableDatas[\"incidentAgeing\"]=incidentAgeing;\ntableDatas[\"probrecordAgeing\"]=probrecordAgeing;\nmsg.tableDatas= JSON.stringify(tableDatas);\nmsg.tableData=tableDatas;\nmsg.summaryInfo={\n\t\"oneWeekCritical\":oneWeekCritical,\n\t\"oneWeekHigh\":oneWeekHigh,\n\t\"criticalIncident\":criticalIncidentObj,\n\t\"highIncident\":highIncidentObj\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 657.9999828338623,
+        "y": 245.25003051757812,
+        "wires": [
+            [
+                "21270523.8442da"
+            ]
+        ]
+    },
+    {
+        "id": "ce43d020.cf207",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 88.82670593261719,
+        "y": 33.090911865234375,
+        "wires": [
+            [
+                "8db0206f.48788"
+            ]
+        ]
+    },
+    {
+        "id": "4fec9876.a5ab68",
+        "type": "csv",
+        "z": "61f45e89.e9959",
+        "name": "CSV content",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "l",
+        "x": 422.8267059326172,
+        "y": 25.090911865234375,
+        "wires": [
+            [
+                "68f00d2a.165314"
+            ]
+        ]
+    },
+    {
+        "id": "68f00d2a.165314",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 552.8267059326172,
+        "y": 75.09091186523438,
+        "wires": [
+            [
+                "fbe785b5.c942f8"
+            ]
+        ]
+    },
+    {
+        "id": "fbe785b5.c942f8",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "Aecom-csv",
+        "collection": "Aecom-data",
+        "payonly": true,
+        "upsert": true,
+        "multi": true,
+        "operation": "store",
+        "x": 722.8267059326172,
+        "y": 50.090911865234375,
+        "wires": []
+    },
+    {
+        "id": "8db0206f.48788",
+        "type": "file in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "filename": "D:/csv-files/Ecom5fSEV45fIncidentsnew.csv",
+        "format": "utf8",
+        "x": 229.82666015625,
+        "y": 86.09091186523438,
+        "wires": [
+            [
+                "4fec9876.a5ab68"
+            ]
+        ]
+    },
+    {
+        "id": "3523d4be.fb800c",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/getaecom",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 85,
+        "y": 656.022705078125,
+        "wires": [
+            [
+                "1021a67a.af2b8a"
+            ]
+        ]
+    },
+    {
+        "id": "e1ef9f48.f82f5",
+        "type": "mongodb in",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "Aecom-data",
+        "operation": "find",
+        "x": 386,
+        "y": 674.022705078125,
+        "wires": [
+            [
+                "6d1adb7c.e41cb4"
+            ]
+        ]
+    },
+    {
+        "id": "6d1adb7c.e41cb4",
+        "type": "json",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 531,
+        "y": 748.022705078125,
+        "wires": [
+            [
+                "43333388.b7ec6c"
+            ]
+        ]
+    },
+    {
+        "id": "7260f245.c3057c",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 837,
+        "y": 722.022705078125,
+        "wires": []
+    },
+    {
+        "id": "43333388.b7ec6c",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 666,
+        "y": 694.022705078125,
+        "wires": [
+            [
+                "7260f245.c3057c"
+            ]
+        ]
+    },
+    {
+        "id": "1021a67a.af2b8a",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.skip=0;\nmsg.limit=0;\nmsg.payload={};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 141,
+        "y": 741.022705078125,
+        "wires": [
+            [
+                "e1ef9f48.f82f5"
+            ]
+        ]
+    },
+    {
+        "id": "ef656852.ef2638",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getaecom",
+        "tls": "",
+        "x": 269.1896057128906,
+        "y": 316.1761474609375,
+        "wires": [
+            [
+                "579dafa5.64bd1"
+            ]
+        ]
+    },
+    {
+        "id": "579dafa5.64bd1",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier=\"aecom\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450.9431610107422,
+        "y": 287.08380126953125,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "b74868ad.b90be8",
+        "type": "gcalendar",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "topic": "gcalendar",
+        "calendarId": "primary",
+        "x": 235.99998474121094,
+        "y": 40,
+        "wires": [
+            [
+                "76e5561.61c34a8"
+            ]
+        ]
+    },
+    {
+        "id": "76e5561.61c34a8",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "msg.identifier=\"calendar-event\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 393,
+        "y": 55,
+        "wires": [
+            [
+                "ce75b255.31529"
+            ]
+        ]
+    },
+    {
+        "id": "79ac9c3c.7aeed4",
+        "type": "http in",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "url": "/categoryPage",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 128.95738220214844,
+        "y": 440.593710899353,
+        "wires": [
+            [
+                "2c6a95de.80a52a"
+            ]
+        ]
+    },
+    {
+        "id": "2c6a95de.80a52a",
+        "type": "http request",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://127.0.0.1:80/getjson",
+        "tls": "",
+        "x": 150.9545440673828,
+        "y": 381.0511245727539,
+        "wires": [
+            [
+                "96d04027.de742"
+            ]
+        ]
+    },
+    {
+        "id": "964ca15d.00a79",
+        "type": "template",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": " \n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>MNS-Reporting</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"assets/wsr-automation/css/style.css\">\n        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js\"></script>\n\n    <script type=\"text/javascript\">\n    $(document).ready(function(){\n        \n    \n      $('select').on('change',function(e){\n        console.log($(this).closest('tr').find('input,select').serialize());\n    $.ajax({\n        type     : \"POST\",\n        cache    : false,\n        url      : \"http://localhost/updateData\",\n        data     : $(this).closest('tr').find('input,select').serialize(),\n        success  : function(data) {\n           // $(\".printArea\").empty().append(data).css('visibility','visible');\n           console.log(\"success\")\n        }\n    });\n//}\n});\n});\n    </script>\n</head>\n<body>\n<table>\n\n    {{#categoryData.length}}\n        <tr>\n            <td>Incident Id</td>\n            <td>Summary</th>\n            <td>Categorisation</td>\n            <td>Category List</td>\n\n        </tr>\n    {{/categoryData.length}}\n    {{#categoryData}}\n        <form class=\"formcl\" action=\"updateData\" method=\"POST\">\n        <tr> \n        <input type=\"hidden\" value=\"{{Priority*}}\" name=\"Priority*\"/>\n        <input type=\"hidden\" value=\"{{Impact*}}\" name=\"Impact*\"/>\n        <input type=\"hidden\" value=\"{{Summary*}}\" name=\"Summary*\"/>\n        <input type=\"hidden\" value=\"{{Incident ID*+}}\" name=\"Incident ID*+\"/>\n        <input type=\"hidden\" value=\"{{Status*}}\" name=\"Status*\"/>\n                <input type=\"hidden\" value=\"{{Status_Reason_Hidden}}\" name=\"Status_Reason_Hidden\"/>\n        <input type=\"hidden\" value=\"{{Vendor Ticket Number}}\" name=\"Vendor Ticket Number\"/>\n        <input type=\"hidden\" value=\"{{Assignee+}}\" name=\"Assignee+\"/>\n                <input type=\"hidden\" value=\"{{Reported Date+}}\" name=\"Reported Date+\"/>\n        <input type=\"hidden\" value=\"{{Responded Date+}}\" name=\"Responded Date+\"/>\n        <input type=\"hidden\" value=\"{{Last Resolved Date}}\" name=\"Last Resolved Date\"/>\n        <input type=\"hidden\" value=\"{{Closed Date}}\" name=\"Closed Date\"/>\n        <input type=\"hidden\" value=\"{{First Name+}}\" name=\"First Name+\"/>\n        <input type=\"hidden\" value=\"{{Last Name+}}\" name=\"Last Name+\"/>\n\n            <td>{{Incident ID*+}}</td>\n            <td>{{Summary*}}</td>\n            <td>{{Resolution Categorization Tier 1}}</td>\n            <td>   \n                <!--<select name=\"cate\" class=\"select-category\" onchange=\"this.form.submit()\">-->\n                <select name=\"cate\" class=\"select-category\" >\n                <option>Site Confidence Issues</option>\n                <option>Application Error</option>\n                <option>Service Request IT</option>\n                <option>Service Request Business</option>\n                <option>Misdirected/ Invalid call</option>\n                <option>Training Issues</option>\n                <option>Duplicate call</option>\n                <option>Security Breach</option>\n                <option>Known Error</option>\n                <option>Connectivity Issue - 3rd Party</option>\n\n                </select>\n\n                </td>\n        </tr>\n        </form>\n\n    {{/categoryData}}\n</table>\n\n</body>\n</html>",
+        "x": 465.96302795410156,
+        "y": 380.78692626953125,
+        "wires": [
+            [
+                "399095f0.1de05a"
+            ]
+        ]
+    },
+    {
+        "id": "399095f0.1de05a",
+        "type": "http response",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "x": 629.9573211669922,
+        "y": 364.1817846298218,
+        "wires": []
+    },
+    {
+        "id": "96d04027.de742",
+        "type": "function",
+        "z": "73c2b0f6.41dab",
+        "name": "",
+        "func": "//console.log(typeof(msg.payload));\nmsg.categoryData=JSON.parse(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 312.9545440673828,
+        "y": 380.87213134765625,
+        "wires": [
+            [
+                "964ca15d.00a79"
+            ]
+        ]
+    },
+    {
+        "id": "86c7c3f9.686f",
+        "type": "mongodb out",
+        "z": "61f45e89.e9959",
+        "mongodb": "c60cb185.3a934",
+        "name": "",
+        "collection": "all-incidentsData",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "update",
+        "x": 492.96022033691406,
+        "y": 816.7471923828125,
+        "wires": []
+    },
+    {
+        "id": "2244e59d.f20c8a",
+        "type": "inject",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 148.9630584716797,
+        "y": 914.96875,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6924077.748f9",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "msg.query={\"Incident ID*+\":msg.payload[\"Incident ID*+\"]};\n//msg.payload={\"Priority*\":\"xyz\",\"Impact*\":\"1-Extensive/Widespread\",\"Summary*\":\"ZABBIX (loyalty_prod_ip-10-186-8-193[201921]) - Alert that started at 2016.11.02 20:20:36 UTC\",\"Incident ID*+\":\"INC000057571413\",\"Status*\":\"Closed\",\"Status_Reason_Hidden\":\"Automated Resolution Reported\",\"Assignee+\":\"Divyanash Khandelwal\",\"Reported Date+\":\"11/3/2016 1:54:07 AM\",\"Last Resolved Date\":\"11/3/2016 3:24:27 AM\",\"Closed Date\":\"11/10/2016 7:30:11 AM\",\"First Name+\":\"Netcool Generic\",\"Last Name+\":\"User\",\"Resolution Categorization Tier 1\":msg.payload.cate};\nmsg.payload={\"Priority*\":msg.payload[\"Priority*\"],\"Impact*\":msg.payload[\"Impact*\"],\"Summary*\":msg.payload[\"Summary*\"],\"Incident ID*+\":msg.payload[\"Incident ID*+\"],\"Status*\":msg.payload[\"Status*\"],\"Status_Reason_Hidden\":msg.payload[\"Status_Reason_Hidden\"],\"Assignee+\":msg.payload[\"Assignee+\"],\"Reported Date+\":msg.payload[\"Reported Date+\"],\"Last Resolved Date\":msg.payload[\"Last Resolved Date\"],\"Closed Date\":msg.payload[\"Closed Date\"],\"First Name+\":msg.payload[\"First Name+\"],\"Last Name+\":msg.payload[\"Last Name+\"],\"Resolution Categorization Tier 1\":msg.payload.cate};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 319.9516906738281,
+        "y": 894.6051025390625,
+        "wires": [
+            [
+                "86c7c3f9.686f",
+                "98d7961b.42b3c8"
+            ]
+        ]
+    },
+    {
+        "id": "4699e519.6787bc",
+        "type": "http in",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "url": "/updateData",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 95,
+        "y": 794.3209838867188,
+        "wires": [
+            [
+                "191945cd.9c0a1a"
+            ]
+        ]
+    },
+    {
+        "id": "191945cd.9c0a1a",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "console.log(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 209.9630584716797,
+        "y": 839.0539582307676,
+        "wires": [
+            [
+                "d6924077.748f9"
+            ]
+        ]
+    },
+    {
+        "id": "bf37eab1.bdb798",
+        "type": "delay",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 489.96022033691406,
+        "y": 866.6875,
+        "wires": [
+            [
+                "cf4310a0.64a4f"
+            ]
+        ]
+    },
+    {
+        "id": "cf4310a0.64a4f",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 642.9516448974609,
+        "y": 881.0596313476562,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8cdd1b04.43cb88",
+        "type": "function",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 541.9629974365234,
+        "y": 999.8749389648438,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98d7961b.42b3c8",
+        "type": "http response",
+        "z": "61f45e89.e9959",
+        "name": "",
+        "x": 619.9545135498047,
+        "y": 938.9090576171875,
         "wires": []
     }
 ]

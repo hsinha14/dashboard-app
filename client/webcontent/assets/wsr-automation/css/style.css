@@ -92,7 +92,7 @@ th, td {
   padding: 5px; }
 
 #incidents tr:nth-child(even), #slaView tr:nth-child(even), #incidentSummary tr:nth-child(even) {
-  background-color: #ebdde2; }
+  background-color: #DCDCDC; }
 
 table tr:first-child td {
   font-weight: bold; }
@@ -104,7 +104,7 @@ table tr:first-child td {
 
 #incidents {
   float: left;
-  width: 55%; }
+  width: 54%; }
   @media screen and (max-width: 1024px) {
     #incidents {
       width: 100%;
@@ -112,7 +112,7 @@ table tr:first-child td {
 
 #slaView, #incidentSummary {
   float: right;
-  width: 40%; }
+  width: 43%; }
   @media screen and (max-width: 1024px) {
     #slaView, #incidentSummary {
       width: 100%;
@@ -149,6 +149,9 @@ h1 {
 #incidentBurnRate, #weeklyAge {
   float: left;
   width: 48%; }
+  #weeklyAge {
+    width: 100%;
+  }
 
 #incidentAgeing, #releaseAlignment {
   float: right;
@@ -178,14 +181,14 @@ h1 {
 
 #categorization {
   float: left;
-  width: 38%; }
+  width: 52%; }
   #categorization caption {
-    width: 124%; }
+    width: 100%; }
   #categorization tr {
     background-color: #ffffff; }
   #categorization tr:last-child td {
-    font-weight: bold;
-    background-color: #B8CCE4; }
+   /* font-weight: bold;
+    background-color: #B8CCE4;*/ }
   #categorization tr:first-child td {
     background-color: #B8CCE4; }
 
@@ -238,5 +241,12 @@ div.right-panel {
 .chart-width {
   width: 80%;
   min-width: 100%; }
-
+  h4 {
+    margin:0 auto;
+    text-align: center;
+  }
+.edit_area textarea {
+  padding: 0;
+margin: 0;
+text-align: left;}
 /*# sourceMappingURL=style.css.map */

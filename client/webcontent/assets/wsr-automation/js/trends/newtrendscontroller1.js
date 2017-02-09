@@ -15,4 +15,14 @@ app.controller("trendsCtrl", function($scope,$http, $timeout) {
     });
    
   });
+app.controller("reportsCtrl", function($scope,$http, $timeout) {
+    $scope.printOption=function(){
+        window.print();
+    };
+    $timeout(function(){
+        $scope.tableDatas=tableDatas;
+        //$scope.accomp=accomp;
+
+    });   
+ });
 
